@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JavaScript 오픈북 시험 비법노트</title>
+<style>
+:root{
+  --bg:#0f172a; --panel:#111827; --panel2:#1f2937; --text:#e5e7eb; --muted:#94a3b8;
+  --accent:#38bdf8; --accent2:#22c55e; --warn:#f59e0b; --danger:#ef4444; --border:#334155;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{position:sticky;top:0;z-index:20;background:rgba(15,23,42,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:14px 18px}
+.header-inner{max-width:1400px;margin:auto;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+h1{font-size:1.25rem;margin:0}.sub{font-size:.9rem;color:var(--muted)}
+.search-wrap{display:flex;gap:8px;align-items:center}.search-wrap input{width:min(440px,56vw);padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#020617;color:white;outline:none}.search-wrap button{padding:10px 12px;border-radius:10px;border:0;background:var(--accent);font-weight:700;cursor:pointer}
+.layout{max-width:1400px;margin:auto;display:grid;grid-template-columns:280px 1fr;gap:18px;padding:18px}
+nav{position:sticky;top:90px;height:calc(100vh - 110px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px}
+nav h2{font-size:1rem;margin:0 0 10px} nav a{display:block;color:#cbd5e1;text-decoration:none;padding:7px 8px;border-radius:8px;font-size:.92rem}nav a:hover{background:var(--panel2);color:white}
+main{min-width:0}.hero{background:linear-gradient(135deg,#0ea5e9 0%,#2563eb 45%,#7c3aed 100%);padding:22px;border-radius:16px;margin-bottom:18px}.hero h2{margin:0 0 6px}.hero p{margin:0}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0}.quick a{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;text-decoration:none;color:white}.quick strong{color:var(--accent)}
+section{background:var(--panel);border:1px solid var(--border);border-radius:14px;margin:0 0 16px;overflow:hidden}.section-title{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;background:#111827;cursor:pointer}.section-title h2{font-size:1.1rem;margin:0}.section-body{padding:0 18px 18px}.collapsed .section-body{display:none}.badge{font-size:.75rem;padding:3px 7px;border-radius:999px;background:#0c4a6e;color:#bae6fd}
+.callout{padding:12px 14px;border-radius:10px;margin:12px 0;background:#172554;border-left:4px solid var(--accent)}.warn{background:#422006;border-left-color:var(--warn)}.danger{background:#450a0a;border-left-color:var(--danger)}
+pre{position:relative;background:#020617;border:1px solid #1e293b;border-radius:10px;padding:14px;overflow:auto}code{font-family:Consolas,monospace}.copy{position:absolute;top:8px;right:8px;border:0;border-radius:7px;background:#334155;color:white;padding:5px 8px;cursor:pointer;font-size:.78rem}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}th,td{border:1px solid var(--border);padding:9px;vertical-align:top}th{background:#1e293b;text-align:left}.k{color:#7dd3fc;font-weight:700}.v{color:#86efac}.danger-text{color:#fca5a5;font-weight:700}
+ul{padding-left:20px}.recipe{background:#0b1220;border:1px dashed #475569;border-radius:12px;padding:12px;margin:10px 0}.hidden{display:none!important}.hl{background:#facc15;color:#111827;padding:0 2px;border-radius:3px}
+footer{color:var(--muted);text-align:center;padding:24px 12px 40px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}nav{position:relative;top:0;height:auto}.header-inner{grid-template-columns:1fr}.search-wrap input{width:100%}.search-wrap{width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div><h1>🧠 JavaScript 오픈북 시험 비법노트</h1><div class="sub">문제 키워드 검색 → 해당 섹션 이동 → 코드 복사 → 변수명/조건만 수정</div></div>
+    <div class="search-wrap"><input id="search" placeholder="예: 홀수, prompt, 배열, DOM, 클릭, fetch" /><button onclick="doSearch()">검색</button></div>
+  </div>
+</header>
+<div class="layout">
+<nav>
+  <h2>⚡ 빠른 이동</h2>
+  <a href="#start">시험 시작 전</a><a href="#io">1. 입출력/변수</a><a href="#type">2. 자료형/형변환</a><a href="#op">3. 연산자</a><a href="#cond">4. 조건문</a><a href="#loop">5. 반복문</a><a href="#array">6. 배열</a><a href="#func">7. 함수</a><a href="#obj">8. 객체</a><a href="#dom">9. DOM 접근</a><a href="#domchange">10. DOM 변경</a><a href="#event">11. Event</a><a href="#css">12. Event + CSS</a><a href="#fetch">13. fetch</a><a href="#error">오류 찾기</a><a href="#recipe">문제별 복붙 레시피</a>
+</nav>
+<main>
+  <div class="hero" id="start"><h2>🎯 이 노트 쓰는 법</h2><p>문제에서 <b>명사</b>(배열/함수/DOM/이벤트)와 <b>동작</b>(입력/반복/클릭/변경)을 먼저 찾고, 검색창에서 키워드를 검색하세요.</p></div>
+
+  <div class="quick">
+    <a href="#type"><strong>숫자 계산</strong><br>prompt → parseInt / Number</a>
+    <a href="#op"><strong>홀짝 판별</strong><br>% 2 === 0</a>
+    <a href="#loop"><strong>반복 출력</strong><br>for / while</a>
+    <a href="#dom"><strong>HTML 요소 찾기</strong><br>getElementById / querySelector</a>
+    <a href="#event"><strong>클릭·키보드</strong><br>addEventListener</a>
+    <a href="#fetch"><strong>API 통신</strong><br>fetch → then → json</a>
+  </div>
+
+<section id="io"><div class="section-title" onclick="toggleSection(this)"><h2>1. 🟢 입출력 + 변수</h2><span class="badge">prompt / console / let</span></div><div class="section-body">
+<ul><li><span class="k">prompt()</span> : 사용자가 입력한 값을 <b>문자열</b>로 반환</li><li><span class="k">confirm()</span> : 확인/취소 → Boolean</li><li><span class="k">console.log()</span> : 콘솔 출력</li><li><span class="k">alert()</span> : 알림창</li><li><span class="k">document.write()</span> : HTML 화면 출력</li></ul>
+<pre><button class="copy">복사</button><code>let name = prompt('이름을 입력하세요');
+console.log(`안녕하세요~ ${name}님 즐거운 하루 되세요~!`);</code></pre>
+<table><tr><th>키워드</th><th>재선언</th><th>재할당</th></tr><tr><td>var</td><td>가능</td><td>가능</td></tr><tr><td>let</td><td>불가능</td><td>가능</td></tr><tr><td>const</td><td>불가능</td><td>불가능</td></tr></table>
+</div></section>
+
+<section id="type"><div class="section-title" onclick="toggleSection(this)"><h2>2. 🔵 자료형 + 형변환</h2><span class="badge">typeof / Number / parseInt</span></div><div class="section-body">
+<p>숫자형, 문자열, Boolean, undefined, null, 배열 [], 객체 {}를 배웠고 <span class="k">typeof()</span>로 타입 확인.</p>
+<div class="danger callout"><b>시험 핵심:</b> prompt 결과는 문자열. 숫자 계산이면 먼저 형변환.</div>
+<pre><button class="copy">복사</button><code>let num1 = parseInt(prompt('첫 번째 숫자'));
+let num2 = parseInt(prompt('두 번째 숫자'));
+console.log(num1 + num2);</code></pre>
+<table><tr><th>목적</th><th>코드</th></tr><tr><td>숫자</td><td>Number()</td></tr><tr><td>정수</td><td>parseInt()</td></tr><tr><td>실수</td><td>parseFloat()</td></tr><tr><td>문자열</td><td>String() / toString()</td></tr><tr><td>소수점 자리</td><td>toFixed(n)</td></tr></table>
+</div></section>
+
+<section id="op"><div class="section-title" onclick="toggleSection(this)"><h2>3. 🟠 연산자</h2><span class="badge">% / === / && / ? :</span></div><div class="section-body">
+<p>산술: + - * / % / 비교: ==, ===, !=, !== / 논리: !, &&, || / 삼항: 조건 ? 참 : 거짓</p>
+<pre><button class="copy">복사</button><code>let num = parseInt(prompt('숫자 입력'));
+console.log(num % 2 === 0 ? `${num}은 짝수입니다.` : `${num}은 홀수입니다.`);</code></pre>
+<div class="callout warn"><b>증감연산자</b> ++num은 먼저 증가, num++은 현재 값 먼저 사용 후 증가.</div>
+</div></section>
+
+<section id="cond"><div class="section-title" onclick="toggleSection(this)"><h2>4. 🟡 조건문</h2><span class="badge">if / else if / switch</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>if (조건1) {
+    // 조건1이 참
+} else if (조건2) {
+    // 조건2가 참
+} else {
+    // 모두 거짓
+}</code></pre>
+<pre><button class="copy">복사</button><code>switch (값) {
+    case 값1:
+        실행문;
+        break;
+    case 값2:
+        실행문;
+        break;
+    default:
+        실행문;
+        break;
+}</code></pre>
+</div></section>
+
+<section id="loop"><div class="section-title" onclick="toggleSection(this)"><h2>5. 🔁 반복문</h2><span class="badge">while / for / break</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>let num = 1;
+while (num &lt; 11) {
+    console.log(num);
+    num += 1;
+}</code></pre>
+<pre><button class="copy">복사</button><code>for (let i = 1; i &lt;= 10; i++) {
+    console.log(i);
+}</code></pre>
+<div class="danger callout"><b>무한반복 체크:</b> while 안에서 값이 바뀌는지, while(true)라면 break 조건이 있는지 확인.</div>
+</div></section>
+
+<section id="array"><div class="section-title" onclick="toggleSection(this)"><h2>6. 📦 배열 Array</h2><span class="badge">push / pop / splice / length</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>let array = [];
+array[0] = 1;
+array.push(2);
+array.pop();</code></pre>
+<table><tr><th>기능</th><th>코드</th></tr><tr><td>길이</td><td>array.length</td></tr><tr><td>수정</td><td>array[2] = 7</td></tr><tr><td>마지막 추가</td><td>push()</td></tr><tr><td>마지막 삭제</td><td>pop()</td></tr><tr><td>중간 삭제</td><td>splice(인덱스, 개수)</td></tr><tr><td>포함 확인</td><td>includes()</td></tr><tr><td>인덱스 찾기</td><td>indexOf()</td></tr><tr><td>일부 복사</td><td>slice(시작, 끝)</td></tr></table>
+<pre><button class="copy">복사</button><code>for (let i = 0; i &lt; array.length; i++) {
+    console.log(array[i]);
+}</code></pre>
+</div></section>
+
+<section id="func"><div class="section-title" onclick="toggleSection(this)"><h2>7. 🧩 함수</h2><span class="badge">function / return / =&gt;</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>function sum(num1, num2) {
+    return num1 + num2;
+}
+console.log(sum(3, 10));</code></pre>
+<pre><button class="copy">복사</button><code>const func = (num1, num2) =&gt; {
+    console.log(num1 + num2);
+};</code></pre>
+<p>매개변수 1개면 괄호 생략 가능. 한 줄 반환이면 중괄호와 return 생략 가능.</p>
+</div></section>
+
+<section id="obj"><div class="section-title" onclick="toggleSection(this)"><h2>8. 🗂️ 객체 Object</h2><span class="badge">key:value / obj.key</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>let person = {
+    name: '김미선',
+    age: 20,
+    favorite: { food: 'pizza', drink: 'coffee' },
+    asia: ['ko', 'jp', 'ch']
+};
+
+console.log(person.name);
+console.log(person.favorite.drink);
+console.log(person.asia[0]);</code></pre>
+<pre><button class="copy">복사</button><code>let pokemon = [
+    {name:'메타몽', type:'변신'},
+    {name:'따라큐', type:'고스트'}
+];
+console.log(pokemon[0].name);</code></pre>
+</div></section>
+
+<section id="dom"><div class="section-title" onclick="toggleSection(this)"><h2>9. 🔎 DOM — HTML 요소 찾기</h2><span class="badge">getElement... / querySelector</span></div><div class="section-body">
+<table><tr><th>기준</th><th>코드</th></tr><tr><td>id</td><td>document.getElementById('id')</td></tr><tr><td>class</td><td>document.getElementsByClassName('class')</td></tr><tr><td>tag</td><td>document.getElementsByTagName('li')</td></tr><tr><td>name</td><td>document.getElementsByName('name')</td></tr><tr><td>CSS 선택자 1개</td><td>document.querySelector('#id')</td></tr><tr><td>CSS 선택자 전체</td><td>document.querySelectorAll('li')</td></tr></table>
+<pre><button class="copy">복사</button><code>let list = document.querySelectorAll('li');
+for (let i = 0; i &lt; list.length; i++) {
+    console.log(list[i].innerText);
+}</code></pre>
+</div></section>
+
+<section id="domchange"><div class="section-title" onclick="toggleSection(this)"><h2>10. ✏️ DOM — 내용 변경</h2><span class="badge">innerText / innerHTML / value</span></div><div class="section-body">
+<p><b>innerText</b> = 글자만 / <b>innerHTML</b> = 태그 + 글자.</p>
+<pre><button class="copy">복사</button><code>let title = document.getElementById('tit');
+title.innerText = '텍스트 변경';
+title.innerHTML = '&lt;a href="#"&gt;링크 생성&lt;/a&gt;';</code></pre>
+<pre><button class="copy">복사</button><code>let div = document.getElementById('divTag');
+div.innerHTML += '&lt;h1&gt;DOM활용하기!&lt;/h1&gt;';</code></pre>
+<div class="danger callout">innerText로 읽은 숫자는 문자열이므로 계산 전에 parseInt() 확인.</div>
+</div></section>
+
+<section id="event"><div class="section-title" onclick="toggleSection(this)"><h2>11. 🖱️ Event</h2><span class="badge">click / mouseover / keyup</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>let p = document.getElementById('p_event');
+p.addEventListener('click', () =&gt; {
+    console.log('클릭!');
+});</code></pre>
+<pre><button class="copy">복사</button><code>h4.addEventListener('click', (e) =&gt; {
+    console.log(e.target.innerText);
+});</code></pre>
+<pre><button class="copy">복사</button><code>inputTxt.addEventListener('keyup', () =&gt; {
+    const container = document.getElementById('container');
+    container.innerText = inputTxt.value;
+});</code></pre>
+</div></section>
+
+<section id="css"><div class="section-title" onclick="toggleSection(this)"><h2>12. 🎨 Event + CSS</h2><span class="badge">style.backgroundColor</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>let box = document.getElementById('blueBox');
+box.style.marginLeft = '100px';
+box.style.backgroundColor = 'pink';</code></pre>
+<p>CSS의 <code>background-color</code>는 JavaScript에서 <code>backgroundColor</code>처럼 작성.</p>
+<pre><button class="copy">복사</button><code>let div = document.querySelectorAll('div');
+let btn = document.querySelector('.radius');
+
+btn.addEventListener('click', () =&gt; {
+    for (let i = 0; i &lt; div.length; i++) {
+        div[i].style.borderTopRightRadius = '50px';
+        div[i].style.borderBottomLeftRadius = '50px';
+    }
+});</code></pre>
+</div></section>
+
+<section id="fetch"><div class="section-title" onclick="toggleSection(this)"><h2>13. 🌐 fetch — 데이터 통신</h2><span class="badge">fetch / then / json / catch</span></div><div class="section-body">
+<pre><button class="copy">복사</button><code>let movieUrl = `API주소`;
+
+fetch(movieUrl)
+    .then((res) =&gt; res.json())
+    .then((res) =&gt; {
+        console.log(res);
+    })
+    .catch((error) =&gt; {
+        console.log(error);
+    });</code></pre>
+<div class="callout"><b>수업 흐름:</b> 버튼 찾기 → click 이벤트 → prompt 날짜 → URL에 ${date} → fetch → res.json() → 필요한 배열 → for 반복 → table 문자열 누적 → div.innerHTML → catch</div>
+<pre><button class="copy">복사</button><code>let table = `&lt;table&gt;
+    &lt;tr&gt;
+        &lt;th&gt;순위&lt;/th&gt;
+        &lt;th&gt;영화명&lt;/th&gt;
+        &lt;th&gt;개봉일&lt;/th&gt;
+    &lt;/tr&gt;`;
+
+for (let i = 0; i &lt; movieList.length; i++) {
+    table += `
+        &lt;tr&gt;
+            &lt;td&gt;${movieList[i].rank}&lt;/td&gt;
+            &lt;td&gt;${movieList[i].movieNm}&lt;/td&gt;
+            &lt;td&gt;${movieList[i].openDt}&lt;/td&gt;
+        &lt;/tr&gt;`;
+}
+
+table += `&lt;/table&gt;`;
+document.getElementsByTagName('div')[0].innerHTML = table;</code></pre>
+</div></section>
+
+<section id="error"><div class="section-title" onclick="toggleSection(this)"><h2>🧯 오류 찾기 비법</h2><span class="badge">시험 직전 체크</span></div><div class="section-body">
+<table><tr><th>증상</th><th>확인</th></tr><tr><td>10 + 20이 1020</td><td>prompt 값을 Number()/parseInt() 했는가?</td></tr><tr><td>while이 안 끝남</td><td>증감 또는 break가 있는가?</td></tr><tr><td>DOM 값이 안 나옴</td><td>id/class/tag 이름이 정확한가?</td></tr><tr><td>여러 요소 접근 실패</td><td>[0] 또는 반복문이 필요한가?</td></tr><tr><td>태그가 글자로 보임</td><td>innerText 대신 innerHTML인가?</td></tr><tr><td>input 값 안 나옴</td><td>.value를 사용했는가?</td></tr><tr><td>이벤트 함수가 먼저 실행</td><td>프로퍼티 방식에서 show()가 아니라 show인가?</td></tr><tr><td>fetch then 오류</td><td>=&gt;, 괄호, 중괄호 위치 확인</td></tr><tr><td>CSS 변경 안 됨</td><td>backgroundColor 같은 JS 속성명인가?</td></tr></table>
+</div></section>
+
+<section id="recipe"><div class="section-title" onclick="toggleSection(this)"><h2>🏆 문제 유형별 복붙 레시피</h2><span class="badge">가장 많이 쓸 코드</span></div><div class="section-body">
+<div class="recipe"><h3>① 숫자 입력 → 홀짝</h3><pre><button class="copy">복사</button><code>let num = parseInt(prompt('숫자를 입력하세요'));
+if (num % 2 === 0) {
+    console.log('짝수');
+} else {
+    console.log('홀수');
+}</code></pre></div>
+<div class="recipe"><h3>② 1부터 N까지 반복</h3><pre><button class="copy">복사</button><code>let n = parseInt(prompt('마지막 숫자'));
+for (let i = 1; i &lt;= n; i++) {
+    console.log(i);
+}</code></pre></div>
+<div class="recipe"><h3>③ 버튼 클릭 → 내용 변경</h3><pre><button class="copy">복사</button><code>let btn = document.querySelector('button');
+let target = document.getElementById('target');
+btn.addEventListener('click', () =&gt; {
+    target.innerText = '변경 완료';
+});</code></pre></div>
+<div class="recipe"><h3>④ 버튼 클릭 → CSS 변경</h3><pre><button class="copy">복사</button><code>let btn = document.querySelector('button');
+let box = document.getElementById('box');
+btn.addEventListener('click', () =&gt; {
+    box.style.backgroundColor = 'pink';
+});</code></pre></div>
+<div class="recipe"><h3>⑤ 배열 속 객체 → HTML 출력</h3><pre><button class="copy">복사</button><code>let html = '';
+for (let i = 0; i &lt; data.length; i++) {
+    html += `&lt;p&gt;${data[i].name}&lt;/p&gt;`;
+}
+document.getElementById('container').innerHTML = html;</code></pre></div>
+</div></section>
+
+<footer>업로드한 JavaScript 수업 내용 기반 · 단일 HTML 파일 · 인터넷 없이도 열 수 있음</footer>
+</main></div>
+<script>
+function toggleSection(el){el.parentElement.classList.toggle('collapsed')}
+function escapeRegExp(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+function doSearch(){
+ const q=document.getElementById('search').value.trim().toLowerCase();
+ document.querySelectorAll('section').forEach(s=>s.classList.remove('hidden'));
+ if(!q) return;
+ let first=null;
+ document.querySelectorAll('section').forEach(s=>{
+   const ok=s.innerText.toLowerCase().includes(q);
+   if(!ok) s.classList.add('hidden'); else {s.classList.remove('collapsed'); if(!first) first=s;}
+ });
+ if(first) first.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('search').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
+document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click', async e=>{
+ const code=e.target.nextElementSibling.innerText;
+ await navigator.clipboard.writeText(code);
+ const old=e.target.innerText;e.target.innerText='복사됨!';setTimeout(()=>e.target.innerText=old,900);
+}));
+</script>
+</body>
+</html>
+
