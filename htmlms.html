@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML 오픈북 시험 비법노트</title>
+<style>
+:root{
+  --bg:#fffaf7; --panel:#ffffff; --ink:#2f2a27; --muted:#736b66;
+  --accent:#d97757; --accent2:#f3b49d; --soft:#fff0e8; --border:#eadbd4;
+  --code:#2b2522; --codebg:#f8eee9; --good:#eaf7ef; --warn:#fff4d8;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+header{position:sticky;top:0;z-index:10;background:rgba(255,250,247,.97);border-bottom:1px solid var(--border);padding:14px 18px}
+.header-inner{max-width:1380px;margin:auto;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+h1{margin:0;font-size:1.25rem}.sub{font-size:.9rem;color:var(--muted)}
+.search{display:flex;gap:8px}.search input{width:min(430px,55vw);padding:11px 12px;border:1px solid var(--border);border-radius:11px;background:white}
+.search button{border:0;border-radius:11px;background:var(--accent);color:#fff;padding:10px 14px;font-weight:700;cursor:pointer}
+.layout{max-width:1380px;margin:auto;display:grid;grid-template-columns:270px 1fr;gap:18px;padding:18px}
+nav{position:sticky;top:88px;align-self:start;max-height:calc(100vh - 108px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px}
+nav a{display:block;text-decoration:none;color:var(--ink);padding:7px 9px;border-radius:9px}
+nav a:hover{background:var(--soft)}
+main{min-width:0}.hero{background:linear-gradient(135deg,#ffe5d9,#fff4ee);border:1px solid var(--border);border-radius:18px;padding:22px;margin-bottom:16px}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:16px 0}
+.quick a{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--border);border-radius:13px;padding:12px}
+.quick strong{color:var(--accent)}
+section{background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:15px;overflow:hidden}
+.section-title{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.section-title h2{margin:0;font-size:1.08rem}.badge{font-size:.75rem;background:var(--soft);color:#9a4f36;padding:4px 8px;border-radius:999px}
+.section-body{padding:0 18px 18px}.collapsed .section-body{display:none}
+.callout{padding:12px 14px;border-radius:11px;background:var(--good);margin:12px 0;border-left:4px solid #59a86e}
+.warn{background:var(--warn);border-left-color:#e0a427}
+pre{position:relative;background:var(--codebg);border:1px solid var(--border);border-radius:11px;padding:15px;overflow:auto}
+code{font-family:Consolas,monospace;color:var(--code)}.copy{position:absolute;right:8px;top:8px;border:0;border-radius:7px;background:#8c5a49;color:#fff;padding:5px 8px;cursor:pointer}
+table{width:100%;border-collapse:collapse;margin:12px 0}th,td{border:1px solid var(--border);padding:9px;text-align:left}th{background:#fff3ed}
+.hidden{display:none!important}footer{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}nav{position:relative;top:0;max-height:none}.header-inner{grid-template-columns:1fr}.search input{width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>🌷 HTML 오픈북 시험 비법노트</h1>
+      <div class="sub">문제 키워드 검색 → 필요한 태그 찾기 → 코드 복사 → 내용만 수정</div>
+    </div>
+    <div class="search">
+      <input id="search" placeholder="예: 제목, 이미지, 링크, 표, colspan, radio, form">
+      <button onclick="doSearch()">검색</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+<nav>
+  <h3>⚡ 빠른 이동</h3>
+  <a href="#basic">1. 기본 태그</a>
+  <a href="#em">2. 강조 태그</a>
+  <a href="#list">3. 리스트</a>
+  <a href="#img">4. 이미지</a>
+  <a href="#a">5. 링크</a>
+  <a href="#table">6. 테이블</a>
+  <a href="#form">7. Form</a>
+  <a href="#practice">8. 회원가입 실습</a>
+  <a href="#error">🚨 실수 체크</a>
+</nav>
+
+<main>
+<div class="hero">
+  <h2>🎯 시험에서 이렇게 찾기</h2>
+  <p><b>“제목/문단/줄바꿈”</b> → 기본 태그 / <b>“이미지”</b> → img / <b>“페이지 이동”</b> → a / <b>“표”</b> → table / <b>“입력·선택·제출”</b> → form</p>
+</div>
+
+<div class="quick">
+  <a href="#basic"><strong>제목 만들기</strong><br>&lt;h1&gt; ~ &lt;h6&gt;</a>
+  <a href="#img"><strong>이미지 넣기</strong><br>&lt;img src=""&gt;</a>
+  <a href="#a"><strong>링크 연결</strong><br>&lt;a href=""&gt;</a>
+  <a href="#table"><strong>표 만들기</strong><br>table / tr / th / td</a>
+  <a href="#form"><strong>입력창 만들기</strong><br>input / select / textarea</a>
+  <a href="#form"><strong>선택하기</strong><br>checkbox / radio</a>
+</div>
+
+<section id="basic">
+<div class="section-title" onclick="toggleSection(this)"><h2>1. 🧱 HTML 기본 태그</h2><span class="badge">h / p / span / br / hr</span></div>
+<div class="section-body">
+<table><tr><th>원하는 기능</th><th>태그</th><th>핵심</th></tr>
+<tr><td>제목</td><td>&lt;h1&gt; ~ &lt;h6&gt;</td><td>숫자가 작을수록 큼</td></tr>
+<tr><td>문단</td><td>&lt;p&gt;</td><td>한 줄 영역을 차지</td></tr>
+<tr><td>문장</td><td>&lt;span&gt;</td><td>입력한 만큼만 영역 차지</td></tr>
+<tr><td>줄바꿈</td><td>&lt;br&gt;</td><td>개행</td></tr>
+<tr><td>구분선</td><td>&lt;hr&gt;</td><td>수평선</td></tr></table>
+<pre><button class="copy">복사</button><code>&lt;h1&gt;제목&lt;/h1&gt;
+&lt;p&gt;본문 문단&lt;/p&gt;
+&lt;span&gt;짧은 문장&lt;/span&gt;
+&lt;br&gt;
+&lt;hr&gt;</code></pre>
+</div>
+</section>
+
+<section id="em">
+<div class="section-title" onclick="toggleSection(this)"><h2>2. ✨ 강조 태그</h2><span class="badge">b / strong / mark / sup / sub</span></div>
+<div class="section-body">
+<table><tr><th>태그</th><th>의미</th></tr>
+<tr><td>&lt;b&gt;</td><td>시각적으로 굵게</td></tr>
+<tr><td>&lt;strong&gt;</td><td>의미상 중요한 강조</td></tr>
+<tr><td>&lt;mark&gt;</td><td>형광펜처럼 배경 강조</td></tr>
+<tr><td>&lt;sup&gt;</td><td>위첨자</td></tr>
+<tr><td>&lt;sub&gt;</td><td>아래첨자</td></tr></table>
+<pre><button class="copy">복사</button><code>&lt;strong&gt;중요 내용&lt;/strong&gt;
+&lt;mark&gt;강조할 부분&lt;/mark&gt;
+2&lt;sup&gt;2&lt;/sup&gt;
+H&lt;sub&gt;2&lt;/sub&gt;O</code></pre>
+</div>
+</section>
+
+<section id="list">
+<div class="section-title" onclick="toggleSection(this)"><h2>3. 📋 리스트</h2><span class="badge">ul / ol / li</span></div>
+<div class="section-body">
+<div class="callout"><b>핵심:</b> ul, ol 안에는 실제 항목인 li가 들어갑니다.</div>
+<pre><button class="copy">복사</button><code>&lt;ul type="square"&gt;
+  &lt;li&gt;html&lt;/li&gt;
+  &lt;li&gt;css&lt;/li&gt;
+  &lt;li&gt;js&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<pre><button class="copy">복사</button><code>&lt;ol type="i"&gt;
+  &lt;li&gt;등원하기&lt;/li&gt;
+  &lt;li&gt;QR찍기&lt;/li&gt;
+  &lt;li&gt;수업듣기&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<p>ul type: disc / circle / square · ol type: 1 / A / a / I / i</p>
+</div>
+</section>
+
+<section id="img">
+<div class="section-title" onclick="toggleSection(this)"><h2>4. 🖼️ 이미지</h2><span class="badge">img / src / 상대경로</span></div>
+<div class="section-body">
+<div class="callout"><b>필수 속성:</b> src</div>
+<pre><button class="copy">복사</button><code>&lt;img src="이미지주소" width="300px"&gt;</code></pre>
+<pre><button class="copy">복사</button><code>&lt;img src="../img/고먐미.jpg" width="300px"&gt;</code></pre>
+<table><tr><th>경로</th><th>뜻</th></tr><tr><td>./</td><td>현재 위치 기준</td></tr><tr><td>../</td><td>상위 폴더</td></tr><tr><td>/</td><td>최상위 기준</td></tr></table>
+</div>
+</section>
+
+<section id="a">
+<div class="section-title" onclick="toggleSection(this)"><h2>5. 🔗 a 태그</h2><span class="badge">href / 외부주소 / 내부파일</span></div>
+<div class="section-body">
+<div class="callout"><b>필수 속성:</b> href</div>
+<pre><button class="copy">복사</button><code>&lt;a href="https://www.naver.com"&gt;네이버로 이동&lt;/a&gt;</code></pre>
+<p>이미지를 링크로 만들려면 a 태그 안에 img 태그를 넣습니다.</p>
+<pre><button class="copy">복사</button><code>&lt;a href="./document/ex04_이미지.html"&gt;
+  &lt;img src="./img/고먐미.jpg" width="300px"&gt;
+&lt;/a&gt;</code></pre>
+</div>
+</section>
+
+<section id="table">
+<div class="section-title" onclick="toggleSection(this)"><h2>6. 📊 테이블</h2><span class="badge">table / tr / th / td / colspan / rowspan</span></div>
+<div class="section-body">
+<table><tr><th>태그/속성</th><th>역할</th></tr>
+<tr><td>table</td><td>표 공간 선언</td></tr>
+<tr><td>caption</td><td>표 제목</td></tr>
+<tr><td>tr</td><td>한 행</td></tr>
+<tr><td>th</td><td>제목 셀</td></tr>
+<tr><td>td</td><td>데이터 셀</td></tr>
+<tr><td>colspan</td><td>좌우 열 병합</td></tr>
+<tr><td>rowspan</td><td>위아래 행 병합</td></tr></table>
+<pre><button class="copy">복사</button><code>&lt;table border="1"&gt;
+  &lt;caption&gt;메뉴판&lt;/caption&gt;
+  &lt;tr&gt;
+    &lt;th colspan="2"&gt;메뉴&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;아메리카노&lt;/td&gt;
+    &lt;td rowspan="2"&gt;3500&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;카페라떼&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+<div class="warn callout"><b>시험 실수:</b> colspan/rowspan으로 병합한 뒤 겹치는 td 또는 th는 제거하거나 주석 처리합니다.</div>
+</div>
+</section>
+
+<section id="form">
+<div class="section-title" onclick="toggleSection(this)"><h2>7. 📝 Form 태그</h2><span class="badge">form / input / select / textarea</span></div>
+<div class="section-body">
+<table><tr><th>항목</th><th>핵심</th></tr>
+<tr><td>method="get"</td><td>URL에 내용이 보일 수 있음</td></tr>
+<tr><td>method="post"</td><td>URL 노출 없이 전송, 로그인/회원가입 등</td></tr>
+<tr><td>action</td><td>전송할 위치</td></tr>
+<tr><td>name</td><td>입력값 구분 이름</td></tr>
+<tr><td>placeholder</td><td>입력 안내문구</td></tr>
+<tr><td>autofocus</td><td>페이지 열릴 때 자동 커서</td></tr>
+<tr><td>value</td><td>기본값</td></tr>
+<tr><td>readonly</td><td>읽기 전용</td></tr>
+<tr><td>maxlength</td><td>최대 글자 수</td></tr></table>
+<pre><button class="copy">복사</button><code>&lt;form method="get" action="#"&gt;
+  ID &lt;input type="text" name="id" placeholder="아이디 입력"&gt;
+  PW &lt;input type="password" name="pw" maxlength="10"&gt;
+  &lt;input type="submit" value="전송하기"&gt;
+  &lt;input type="reset"&gt;
+&lt;/form&gt;</code></pre>
+<h3>선택형</h3>
+<pre><button class="copy">복사</button><code>축구 &lt;input type="checkbox" name="hobby" value="soccer"&gt;
+남성 &lt;input type="radio" name="gender" value="man"&gt;
+여성 &lt;input type="radio" name="gender" value="woman"&gt;</code></pre>
+<div class="warn callout"><b>radio 핵심:</b> 같은 질문에서 하나만 선택하게 하려면 name을 같게 맞춥니다.</div>
+<h3>select / textarea</h3>
+<pre><button class="copy">복사</button><code>&lt;select&gt;
+  &lt;option&gt;A형&lt;/option&gt;
+  &lt;option&gt;B형&lt;/option&gt;
+  &lt;option&gt;O형&lt;/option&gt;
+  &lt;option&gt;AB형&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;textarea cols="30" rows="5"&gt;&lt;/textarea&gt;</code></pre>
+</div>
+</section>
+
+<section id="practice">
+<div class="section-title" onclick="toggleSection(this)"><h2>8. 🧪 회원가입 폼 실습 패턴</h2><span class="badge">table + form</span></div>
+<div class="section-body">
+<p>수업 실습은 form 안에 table을 넣고, 단계별 제목 행은 th + colspan으로 묶는 구조입니다.</p>
+<pre><button class="copy">복사</button><code>&lt;form method="get" action="#"&gt;
+  &lt;table width="400" border="1"&gt;
+    &lt;tr bgcolor="gray" height="50" align="center"&gt;
+      &lt;th colspan="2"&gt;step 1 : 아이디/비번 입력&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td align="center"&gt;아이디&lt;/td&gt;
+      &lt;td&gt;&lt;input type="text" name="id"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/form&gt;</code></pre>
+</div>
+</section>
+
+<section id="error">
+<div class="section-title" onclick="toggleSection(this)"><h2>🚨 시험 직전 실수 체크</h2><span class="badge">10초 점검</span></div>
+<div class="section-body">
+<table><tr><th>문제</th><th>확인할 것</th></tr>
+<tr><td>이미지가 안 보임</td><td>src 경로와 ./ ../ 확인</td></tr>
+<tr><td>링크가 안 열림</td><td>href 확인</td></tr>
+<tr><td>리스트 점/번호 안 나옴</td><td>ul/ol 안에 li가 있는지</td></tr>
+<tr><td>표 칸이 이상함</td><td>tr 안의 th/td 개수, colspan/rowspan</td></tr>
+<tr><td>radio가 여러 개 선택됨</td><td>같은 질문의 name이 같은지</td></tr>
+<tr><td>submit/reset이 안 먹음</td><td>form 태그 안에 있는지</td></tr>
+<tr><td>비밀번호가 보임</td><td>type="password"</td></tr>
+<tr><td>입력창 수정 못 하게</td><td>readonly</td></tr></table>
+</div>
+</section>
+
+<footer>HTML 수업자료 기반 · 오픈북 시험 비법노트</footer>
+</main>
+</div>
+
+<script>
+function toggleSection(el){el.parentElement.classList.toggle('collapsed')}
+function doSearch(){
+ const q=document.getElementById('search').value.trim().toLowerCase();
+ const sections=[...document.querySelectorAll('section')];
+ sections.forEach(s=>s.classList.remove('hidden'));
+ if(!q)return;
+ let first=null;
+ sections.forEach(s=>{
+   const ok=s.innerText.toLowerCase().includes(q);
+   if(!ok)s.classList.add('hidden');
+   else{ s.classList.remove('collapsed'); if(!first) first=s; }
+ });
+ if(first) first.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('search').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
+document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async e=>{
+  const code=e.target.nextElementSibling.innerText;
+  try{await navigator.clipboard.writeText(code)}catch{}
+  const old=e.target.innerText; e.target.innerText='복사됨!';
+  setTimeout(()=>e.target.innerText=old,900);
+}));
+</script>
+</body>
+</html>
