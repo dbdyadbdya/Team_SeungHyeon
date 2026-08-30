@@ -58,6 +58,7 @@ footer{color:var(--muted);text-align:center;padding:24px 12px 40px}
 <pre><button class="copy">복사</button><code>let name = prompt('이름을 입력하세요');
 console.log(`안녕하세요~ ${name}님 즐거운 하루 되세요~!`);</code></pre>
 <table><tr><th>키워드</th><th>재선언</th><th>재할당</th></tr><tr><td>var</td><td>가능</td><td>가능</td></tr><tr><td>let</td><td>불가능</td><td>가능</td></tr><tr><td>const</td><td>불가능</td><td>불가능</td></tr></table>
+<div class="callout"><b>개인 필기 보완:</b> <code>const</code>는 값이 바뀌면 안 되는 데이터를 담을 때 사용합니다. 수업 필기에서는 변하지 않는 함수 등을 변수에 담을 때도 <code>const</code>를 사용하는 형태를 기록했습니다.</div>
 </div></section>
 
 <section id="type"><div class="section-title" onclick="toggleSection(this)"><h2>2. 🔵 자료형 + 형변환</h2><span class="badge">typeof / Number / parseInt</span></div><div class="section-body">
@@ -115,6 +116,7 @@ array[0] = 1;
 array.push(2);
 array.pop();</code></pre>
 <table><tr><th>기능</th><th>코드</th></tr><tr><td>길이</td><td>array.length</td></tr><tr><td>수정</td><td>array[2] = 7</td></tr><tr><td>마지막 추가</td><td>push()</td></tr><tr><td>마지막 삭제</td><td>pop()</td></tr><tr><td>중간 삭제</td><td>splice(인덱스, 개수)</td></tr><tr><td>포함 확인</td><td>includes()</td></tr><tr><td>인덱스 찾기</td><td>indexOf()</td></tr><tr><td>일부 복사</td><td>slice(시작, 끝)</td></tr></table>
+<div class="callout"><b>개인 필기 보완:</b> 배열을 반복할 때 조건을 <code>i &lt; array.length</code>로 두는 이유는 배열의 데이터가 추가·삭제되어 길이가 바뀔 수 있기 때문입니다.</div>
 <pre><button class="copy">복사</button><code>for (let i = 0; i &lt; array.length; i++) {
     console.log(array[i]);
 }</code></pre>
@@ -129,6 +131,7 @@ console.log(sum(3, 10));</code></pre>
     console.log(num1 + num2);
 };</code></pre>
 <p>매개변수 1개면 괄호 생략 가능. 한 줄 반환이면 중괄호와 return 생략 가능.</p>
+<div class="callout"><b>함수 vs 메서드:</b> 개인 필기 기준으로 함수는 독립된 코드 블록이고, <b>메서드(method)</b>는 배열처럼 어떤 대상에 종속되어 있는 함수입니다. 예: <code>array.push()</code>에서 <code>push()</code>는 배열에 종속된 메서드.</div>
 </div></section>
 
 <section id="obj"><div class="section-title" onclick="toggleSection(this)"><h2>8. 🗂️ 객체 Object</h2><span class="badge">key:value / obj.key</span></div><div class="section-body">
@@ -151,6 +154,7 @@ console.log(pokemon[0].name);</code></pre>
 
 <section id="dom"><div class="section-title" onclick="toggleSection(this)"><h2>9. 🔎 DOM — HTML 요소 찾기</h2><span class="badge">getElement... / querySelector</span></div><div class="section-body">
 <table><tr><th>기준</th><th>코드</th></tr><tr><td>id</td><td>document.getElementById('id')</td></tr><tr><td>class</td><td>document.getElementsByClassName('class')</td></tr><tr><td>tag</td><td>document.getElementsByTagName('li')</td></tr><tr><td>name</td><td>document.getElementsByName('name')</td></tr><tr><td>CSS 선택자 1개</td><td>document.querySelector('#id')</td></tr><tr><td>CSS 선택자 전체</td><td>document.querySelectorAll('li')</td></tr></table>
+<div class="callout warn"><b>유사배열 주의:</b> <code>getElementsByClassName()</code>, <code>getElementsByTagName()</code> 결과는 HTMLCollection, <code>getElementsByName()</code>, <code>querySelectorAll()</code> 결과는 NodeList 형태로 여러 요소를 담습니다. 개인 필기에서는 이런 값을 <b>배열처럼 인덱스로 접근하지만 배열 관련 함수를 그대로 사용할 수 없는 유사배열</b>로 정리했습니다. 하나만 필요해도 <code>[0]</code>이 필요한지 확인하세요.</div>
 <pre><button class="copy">복사</button><code>let list = document.querySelectorAll('li');
 for (let i = 0; i &lt; list.length; i++) {
     console.log(list[i].innerText);
@@ -261,7 +265,7 @@ for (let i = 0; i &lt; data.length; i++) {
 document.getElementById('container').innerHTML = html;</code></pre></div>
 </div></section>
 
-<footer>업로드한 JavaScript 수업 내용 기반 · 단일 HTML 파일 · 인터넷 없이도 열 수 있음</footer>
+<footer>업로드한 JavaScript 수업 내용 + JS DAY 1~3 개인 필기 보완 · 단일 HTML 파일 · 인터넷 없이도 열 수 있음</footer>
 </main></div>
 <script>
 function toggleSection(el){el.parentElement.classList.toggle('collapsed')}
@@ -286,4 +290,3 @@ document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click', as
 </script>
 </body>
 </html>
-

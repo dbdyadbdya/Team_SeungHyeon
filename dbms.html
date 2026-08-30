@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS 오픈북 시험 비법노트</title>
+<style>
+:root{
+  --bg:#fff7ed;--panel:#ffffff;--panel2:#ffedd5;--text:#3f2d20;--muted:#8a6a55;
+  --accent:#f97316;--accent2:#fb7185;--warn:#f59e0b;--danger:#dc2626;--border:#fed7aa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{position:sticky;top:0;z-index:30;background:rgba(255,247,237,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:14px 18px}
+.header-inner{max-width:1450px;margin:auto;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+h1{font-size:1.25rem;margin:0}.sub{font-size:.9rem;color:var(--muted)}
+.search-wrap{display:flex;gap:8px}.search-wrap input{width:min(460px,56vw);padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:white;color:var(--text);outline:none}.search-wrap button{border:0;border-radius:10px;padding:10px 13px;background:var(--accent);color:white;font-weight:700;cursor:pointer}
+.layout{max-width:1450px;margin:auto;display:grid;grid-template-columns:290px 1fr;gap:18px;padding:18px}
+nav{position:sticky;top:90px;height:calc(100vh - 110px);overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px}
+nav h2{font-size:1rem;margin:0 0 10px} nav a{display:block;text-decoration:none;color:#7c4a2f;padding:7px 8px;border-radius:8px;font-size:.92rem}nav a:hover{background:var(--panel2)}
+main{min-width:0}
+.hero{background:linear-gradient(135deg,#fb923c,#fb7185);color:white;padding:24px;border-radius:18px;margin-bottom:18px;box-shadow:0 10px 26px rgba(249,115,22,.18)}
+.hero h2{margin:0 0 8px}.hero p{margin:0}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0}
+.quick a{background:white;border:1px solid var(--border);border-radius:12px;padding:12px;text-decoration:none;color:var(--text)}
+.quick strong{color:#ea580c}
+section{background:var(--panel);border:1px solid var(--border);border-radius:15px;margin-bottom:16px;overflow:hidden;box-shadow:0 4px 14px rgba(120,80,40,.05)}
+.section-title{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;cursor:pointer;background:#fffaf5}
+.section-title h2{font-size:1.08rem;margin:0}.section-body{padding:0 18px 18px}.collapsed .section-body{display:none}
+.badge{font-size:.75rem;padding:3px 8px;border-radius:999px;background:#ffedd5;color:#c2410c}
+.callout{padding:12px 14px;border-radius:11px;margin:12px 0;background:#fff7ed;border-left:4px solid var(--accent)}
+.warn{background:#fffbeb;border-left-color:var(--warn)}.danger{background:#fef2f2;border-left-color:var(--danger)}
+.exam{background:#fff1f2;border-left-color:var(--accent2)}
+pre{position:relative;background:#2b211b;color:#fff7ed;border-radius:11px;padding:14px;overflow:auto;border:1px solid #4a362a}
+code{font-family:Consolas,monospace}.copy{position:absolute;top:8px;right:8px;border:0;border-radius:7px;background:#6b4f3d;color:white;padding:5px 8px;cursor:pointer;font-size:.78rem}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--border);padding:9px;vertical-align:top}th{background:#ffedd5;text-align:left}
+.k{color:#c2410c;font-weight:700}.v{color:#be123c;font-weight:700}.mini{font-size:.9rem;color:var(--muted)}
+.recipe{background:#fffaf5;border:1px dashed #fdba74;border-radius:12px;padding:12px;margin:10px 0}
+.hidden{display:none!important}
+footer{text-align:center;color:var(--muted);padding:24px 10px 40px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}nav{position:relative;top:0;height:auto}.header-inner{grid-template-columns:1fr}.search-wrap{width:100%}.search-wrap input{width:100%}}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+  <div>
+    <h1>🎨 CSS 오픈북 시험 비법노트</h1>
+    <div class="sub">문제 키워드 검색 → 해당 섹션 이동 → 코드 복사 → 선택자/수치만 수정</div>
+  </div>
+  <div class="search-wrap">
+    <input id="search" placeholder="예: 우선순위, 자손, hover, margin, flex, absolute">
+    <button onclick="doSearch()">검색</button>
+  </div>
+</div>
+</header>
+
+<div class="layout">
+<nav>
+  <h2>⚡ 빠른 이동</h2>
+  <a href="#start">시험 시작 전</a>
+  <a href="#apply">1. CSS 적용 방식</a>
+  <a href="#selector">2. 기본 선택자 + 우선순위</a>
+  <a href="#hierarchy">3. 계층/형제 선택자</a>
+  <a href="#state">4. 반응/그룹 선택자</a>
+  <a href="#font">5. 폰트</a>
+  <a href="#display">6. display</a>
+  <a href="#margin">7. margin</a>
+  <a href="#padding">8. padding + border</a>
+  <a href="#box">9. box-sizing</a>
+  <a href="#flex">10. Flex</a>
+  <a href="#position">11. position</a>
+  <a href="#error">오류 찾기</a>
+  <a href="#recipe">문제별 복붙 레시피</a>
+</nav>
+
+<main>
+<div class="hero" id="start">
+  <h2>🎯 이 노트 쓰는 법</h2>
+  <p>문제에서 먼저 <b>대상</b>(태그/클래스/id/자식/형제)과 <b>목적</b>(숨기기/정렬/여백/위치)을 찾고, 검색창에서 해당 키워드를 검색하세요.</p>
+</div>
+
+<div class="quick">
+  <a href="#selector"><strong>우선순위</strong><br>* &lt; 태그 &lt; class &lt; id &lt; inline &lt; !important</a>
+  <a href="#hierarchy"><strong>관계 선택</strong><br>띄어쓰기 / &gt; / ~ / +</a>
+  <a href="#display"><strong>숨기기</strong><br>display: none</a>
+  <a href="#margin"><strong>바깥 여백</strong><br>margin</a>
+  <a href="#flex"><strong>가운데 정렬</strong><br>display:flex + justify/align</a>
+  <a href="#position"><strong>위치 고정</strong><br>fixed / sticky / absolute</a>
+</div>
+
+<section id="apply">
+<div class="section-title" onclick="toggleSection(this)"><h2>1. 🧾 CSS 적용 방식</h2><span class="badge">style / link</span></div>
+<div class="section-body">
+<div class="callout exam"><b>수업에서 확인된 방식:</b> HTML 안의 <code>&lt;style&gt;</code> 태그에 CSS를 작성하거나, 외부 CSS 파일을 <code>&lt;link rel="stylesheet"&gt;</code>로 연결하는 방식이 등장했습니다.</div>
+<pre><button class="copy">복사</button><code>&lt;style&gt;
+    h1 {
+        color: green;
+    }
+&lt;/style&gt;</code></pre>
+<pre><button class="copy">복사</button><code>&lt;link rel="stylesheet" href="./ex11_position.css"&gt;</code></pre>
+</div>
+</section>
+
+<section id="selector">
+<div class="section-title" onclick="toggleSection(this)"><h2>2. 🎯 기본 선택자 + 우선순위</h2><span class="badge">* / tag / .class / #id / !important</span></div>
+<div class="section-body">
+<table>
+<tr><th>종류</th><th>문법</th><th>수업 필기 점수</th><th>특징</th></tr>
+<tr><td>전체 선택자</td><td><code>*</code></td><td>0점</td><td>모든 요소</td></tr>
+<tr><td>태그 선택자</td><td><code>h1</code></td><td>1점</td><td>같은 태그 전체</td></tr>
+<tr><td>클래스 선택자</td><td><code>.dinner</code></td><td>10점</td><td>중복 사용 가능, 재사용성 높음</td></tr>
+<tr><td>아이디 선택자</td><td><code>#tuna</code></td><td>100점</td><td>한 문서에서 고유 요소용</td></tr>
+<tr><td>인라인 스타일</td><td><code>style=""</code></td><td>1000점</td><td>태그 안에 직접 작성</td></tr>
+<tr><td>!important</td><td><code>color:black !important;</code></td><td>최고 우선</td><td>다른 규칙보다 강하게 적용</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>* {
+    color: rgb(34, 151, 230);
+}
+
+.dinner {
+    color: darkorchid;
+}
+
+#tuna {
+    color: black !important;
+}</code></pre>
+<div class="danger callout"><b>시험 함정:</b> 같은 요소에 여러 CSS가 겹치면 선택자 우선순위를 먼저 확인하세요.</div>
+</div>
+</section>
+
+<section id="hierarchy">
+<div class="section-title" onclick="toggleSection(this)"><h2>3. 🌳 계층 + 형제 선택자</h2><span class="badge">공백 / &gt; / ~ / + / nth-child</span></div>
+<div class="section-body">
+<table>
+<tr><th>관계</th><th>기호</th><th>뜻</th><th>예시</th></tr>
+<tr><td>자손</td><td>띄어쓰기</td><td>기준 요소 안쪽 모든 하위 관계</td><td><code>div span</code></td></tr>
+<tr><td>자식</td><td>&gt;</td><td>바로 아래 자식</td><td><code>ol &gt; span</code></td></tr>
+<tr><td>후행 형제</td><td>~</td><td>뒤쪽에 있는 같은 형제들</td><td><code>li ~ li</code></td></tr>
+<tr><td>근접 형제</td><td>+</td><td>바로 다음 형제 하나</td><td><code>li + li</code></td></tr>
+</table>
+<pre><button class="copy">복사</button><code>div span {
+    color: palevioletred;
+}
+
+ol > span {
+    color: darkorchid;
+}
+
+li ~ li {
+    color: green;
+}
+
+li + li {
+    color: cornflowerblue;
+}</code></pre>
+<div class="callout"><b>nth-child()</b>는 부모의 모든 자식 순서를 기준으로 n번째 요소를 확인합니다.</div>
+<pre><button class="copy">복사</button><code>li:nth-child(4) + li {
+    color: brown;
+}</code></pre>
+</div>
+</section>
+
+<section id="state">
+<div class="section-title" onclick="toggleSection(this)"><h2>4. 🖱️ 반응 선택자 + 그룹 선택자</h2><span class="badge">:hover / :active / ,</span></div>
+<div class="section-body">
+<table>
+<tr><th>선택자</th><th>언제 적용?</th></tr>
+<tr><td><code>:hover</code></td><td>마우스를 올렸을 때</td></tr>
+<tr><td><code>:active</code></td><td>마우스로 클릭하고 있는 순간</td></tr>
+<tr><td><code>,</code></td><td>여러 선택자에 같은 스타일을 적용</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>h1:hover {
+    color: gold;
+}
+
+h2:active {
+    color: blueviolet;
+}
+
+h2, h3 {
+    color: cadetblue;
+}</code></pre>
+</div>
+</section>
+
+<section id="font">
+<div class="section-title" onclick="toggleSection(this)"><h2>5. 🔤 폰트 속성</h2><span class="badge">font-size / weight / style / family</span></div>
+<div class="section-body">
+<table>
+<tr><th>속성</th><th>의미</th></tr>
+<tr><td>font-size</td><td>글자 크기</td></tr>
+<tr><td>font-weight</td><td>글자 굵기, 100~900 / 700은 bold 수준</td></tr>
+<tr><td>font-style</td><td>글자 스타일</td></tr>
+<tr><td>font-family</td><td>폰트 종류</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>p {
+    font-size: 40px;
+    font-weight: 200;
+    font-style: oblique;
+    font-family: 'OngleipEoyeonce';
+}</code></pre>
+<pre><button class="copy">복사</button><code>@font-face {
+    font-family: 'OngleipEoyeonce';
+    src: url('폰트주소') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}</code></pre>
+<div class="mini">수업 파일에는 외부 웹폰트를 @font-face로 불러오는 예시가 포함되어 있습니다.</div>
+</div>
+</section>
+
+<section id="display">
+<div class="section-title" onclick="toggleSection(this)"><h2>6. 🧱 display</h2><span class="badge">block / inline / none</span></div>
+<div class="section-body">
+<table>
+<tr><th>값</th><th>특징</th><th>수업 예시 태그</th></tr>
+<tr><td>block</td><td>가로 한 줄 영역 차지, width/height 설정 가능</td><td>div, p, table</td></tr>
+<tr><td>inline</td><td>내용만큼만 영역 차지, width/height 설정 불가</td><td>img, span, a, b</td></tr>
+<tr><td>none</td><td>화면에서 요소를 보이지 않게 처리</td><td>질문/답 실습</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>.answer {
+    display: none;
+}
+
+.question:hover + .answer {
+    display: inline;
+    color: cadetblue;
+}</code></pre>
+<div class="callout exam"><b>시험 패턴:</b> “평소에는 숨기고 마우스를 올리면 옆의 답을 보여라” → <code>display:none</code> + <code>:hover + 형제선택자</code>.</div>
+</div>
+</section>
+
+<section id="margin">
+<div class="section-title" onclick="toggleSection(this)"><h2>7. 📏 margin — 바깥 여백</h2><span class="badge">margin / margin-left</span></div>
+<div class="section-body">
+<div class="callout"><b>margin:</b> border를 기준으로 <b>바깥쪽 여백</b>.</div>
+<table>
+<tr><th>값 개수</th><th>적용 순서</th></tr>
+<tr><td>1개</td><td>상하좌우 모두 동일</td></tr>
+<tr><td>2개</td><td>첫 번째 = 위/아래, 두 번째 = 좌/우</td></tr>
+<tr><td>3개</td><td>위 / 좌우 / 아래</td></tr>
+<tr><td>4개</td><td>위 → 오른쪽 → 아래 → 왼쪽 (시계 방향)</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>div {
+    margin: 10px 20px 30px 40px;
+}
+
+#box2 {
+    margin-left: 101px;
+}</code></pre>
+</div>
+</section>
+
+<section id="padding">
+<div class="section-title" onclick="toggleSection(this)"><h2>8. 📦 padding + border</h2><span class="badge">padding / border / radius</span></div>
+<div class="section-body">
+<div class="callout"><b>padding:</b> border를 기준으로 <b>안쪽 여백</b>. 값 적용 순서는 margin과 동일하게 사용합니다.</div>
+<pre><button class="copy">복사</button><code>#box {
+    width: 100px;
+    height: 100px;
+    border: solid 20px rgb(161, 215, 238);
+    padding-right: 50px;
+}</code></pre>
+<table>
+<tr><th>border 관련 속성</th><th>예시</th></tr>
+<tr><td>두께</td><td><code>border-width: 3px;</code></td></tr>
+<tr><td>색상</td><td><code>border-color: cadetblue;</code></td></tr>
+<tr><td>모양</td><td><code>border-style: dotted;</code></td></tr>
+<tr><td>한 줄 작성</td><td><code>border: 3px cadetblue dotted;</code></td></tr>
+<tr><td>둥근 모서리</td><td><code>border-radius: 50px;</code></td></tr>
+</table>
+<div class="callout exam"><b>원 만들기:</b> 수업 신호등 실습처럼 <code>width:100px; height:100px; border-radius:50px;</code> 형태를 사용했습니다.</div>
+</div>
+</section>
+
+<section id="box">
+<div class="section-title" onclick="toggleSection(this)"><h2>9. 📐 box-sizing</h2><span class="badge">content-box / border-box</span></div>
+<div class="section-body">
+<table>
+<tr><th>값</th><th>내가 적은 width가 의미하는 범위</th><th>결과</th></tr>
+<tr><td>content-box</td><td>내용(content) 너비만</td><td>padding/border가 추가되면 전체 크기가 커짐</td></tr>
+<tr><td>border-box</td><td>내용 + padding + border까지 포함</td><td>padding/border를 줘도 설정한 전체 너비 안에 포함</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>.cb {
+    box-sizing: content-box;
+}
+
+.bb {
+    box-sizing: border-box;
+}</code></pre>
+<div class="danger callout"><b>시험 핵심:</b> “padding과 border를 줘도 전체 도형 크기가 커지지 않게 하라” → <code>box-sizing: border-box;</code></div>
+</div>
+</section>
+
+<section id="flex">
+<div class="section-title" onclick="toggleSection(this)"><h2>10. 🧭 Flex</h2><span class="badge">display:flex / direction / justify / align</span></div>
+<div class="section-body">
+<div class="callout"><b>Flex 개념:</b> 레이아웃 배치용 기능. 부모 = container, 자식 = item.</div>
+<table>
+<tr><th>속성</th><th>역할</th></tr>
+<tr><td>display:flex</td><td>부모에 Flex 적용</td></tr>
+<tr><td>flex-direction</td><td>메인 축 방향 설정</td></tr>
+<tr><td>justify-content</td><td>메인 축 기준 정렬</td></tr>
+<tr><td>align-items</td><td>서브 축 기준 정렬</td></tr>
+<tr><td>flex-basis</td><td>자식 요소가 차지할 기본 비율/크기</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.item {
+    flex-basis: 15%;
+}
+
+#center {
+    flex-basis: 70%;
+}</code></pre>
+<div class="callout exam"><b>가운데 정렬 문제:</b> 부모에 <code>display:flex</code> → 가로 중앙 <code>justify-content:center</code> → 세로 중앙 <code>align-items:center</code>.</div>
+<div class="recipe"><h3>메뉴바 수업 패턴</h3><pre><button class="copy">복사</button><code>.container {
+    height: 100px;
+    display: flex;
+}
+
+.box1, .box3 {
+    flex-basis: 15%;
+}
+
+.box2 {
+    flex-basis: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box2 > a:hover {
+    color: white;
+    background-color: black;
+}</code></pre></div>
+</div>
+</section>
+
+<section id="position">
+<div class="section-title" onclick="toggleSection(this)"><h2>11. 📍 position</h2><span class="badge">static / relative / absolute / fixed / sticky</span></div>
+<div class="section-body">
+<table>
+<tr><th>값</th><th>기준/특징</th></tr>
+<tr><td>static</td><td>기본값. 위치 속성 비활성화</td></tr>
+<tr><td>relative</td><td>원래 있던 위치를 기준으로 이동</td></tr>
+<tr><td>absolute</td><td>위치 속성이 static이 아닌 부모를 기준으로 배치</td></tr>
+<tr><td>fixed</td><td>부모·스크롤을 무시하고 화면에 고정</td></tr>
+<tr><td>sticky</td><td>부모 안에서 스크롤하다 특정 위치에 도달하면 고정</td></tr>
+</table>
+<pre><button class="copy">복사</button><code>#relative {
+    position: relative;
+    top: 50px;
+    left: 50px;
+}
+
+#absolute {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+#fixed {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#sticky {
+    position: sticky;
+    top: 50px;
+}</code></pre>
+<div class="danger callout"><b>absolute 체크:</b> 부모의 <code>position</code>이 <code>static</code>이면 원하는 부모를 기준으로 잡지 못할 수 있습니다. 수업 필기 핵심은 “static이 아닌 부모”입니다.</div>
+<div class="callout exam"><b>시험 문장 → 코드:</b> “스크롤해도 우측 하단에 계속 보여라” → <code>position:fixed; bottom:0; right:0;</code></div>
+</div>
+</section>
+
+<section id="error">
+<div class="section-title" onclick="toggleSection(this)"><h2>🧯 오류 찾기 비법</h2><span class="badge">시험 직전 체크</span></div>
+<div class="section-body">
+<table>
+<tr><th>증상</th><th>확인할 것</th></tr>
+<tr><td>CSS가 안 먹음</td><td>선택자 이름(. / # / 태그)이 맞는가?</td></tr>
+<tr><td>다른 색이 적용됨</td><td>선택자 우선순위 / 인라인 / !important가 있는가?</td></tr>
+<tr><td>자식만 고르려 했는데 하위 전체가 선택됨</td><td>공백 대신 &gt;가 필요한가?</td></tr>
+<tr><td>바로 옆 형제만 선택하려는데 여러 개 선택됨</td><td>~ 대신 +가 필요한가?</td></tr>
+<tr><td>hover 시 답이 안 보임</td><td>.question:hover + .answer 구조가 실제 HTML 순서와 맞는가?</td></tr>
+<tr><td>width/height가 inline에 안 먹음</td><td>inline 기본 특성인지 확인</td></tr>
+<tr><td>박스 크기가 예상보다 커짐</td><td>content-box인지 border-box인지 확인</td></tr>
+<tr><td>Flex 중앙정렬 안 됨</td><td>부모에 display:flex가 있는가?</td></tr>
+<tr><td>top/left가 static에서 안 움직임</td><td>position이 static인지 확인</td></tr>
+<tr><td>absolute 기준이 이상함</td><td>부모 position이 static 아닌지 확인</td></tr>
+</table>
+</div>
+</section>
+
+<section id="recipe">
+<div class="section-title" onclick="toggleSection(this)"><h2>🏆 문제 유형별 복붙 레시피</h2><span class="badge">시험장에서 바로 쓰기</span></div>
+<div class="section-body">
+
+<div class="recipe"><h3>① 클래스 하나로 여러 요소 꾸미기</h3>
+<pre><button class="copy">복사</button><code>.menu {
+    color: darkorchid;
+}</code></pre></div>
+
+<div class="recipe"><h3>② 마우스를 올리면 다음 요소 보이기</h3>
+<pre><button class="copy">복사</button><code>.answer {
+    display: none;
+}
+
+.question:hover + .answer {
+    display: inline;
+}</code></pre></div>
+
+<div class="recipe"><h3>③ 상하좌우 여백 한 번에</h3>
+<pre><button class="copy">복사</button><code>.box {
+    margin: 10px 20px 30px 40px;
+    padding: 10px 20px;
+}</code></pre></div>
+
+<div class="recipe"><h3>④ 크기 유지되는 박스</h3>
+<pre><button class="copy">복사</button><code>.box {
+    width: 500px;
+    padding: 20px;
+    border: 20px solid gray;
+    box-sizing: border-box;
+}</code></pre></div>
+
+<div class="recipe"><h3>⑤ 부모 안에서 완전 중앙정렬</h3>
+<pre><button class="copy">복사</button><code>.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}</code></pre></div>
+
+<div class="recipe"><h3>⑥ 화면 우측 하단 고정 버튼</h3>
+<pre><button class="copy">복사</button><code>.topBtn {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}</code></pre></div>
+
+<div class="recipe"><h3>⑦ 특정 부모 기준 absolute</h3>
+<pre><button class="copy">복사</button><code>.parent {
+    position: relative;
+}
+
+.child {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}</code></pre></div>
+
+</div>
+</section>
+
+<footer>업로드한 CSS 수업파일 기반 · 선택자 / 폰트 / display / 박스모델 / Flex / position 정리 · 단일 HTML 파일</footer>
+</main>
+</div>
+
+<script>
+function toggleSection(el){el.parentElement.classList.toggle('collapsed')}
+function doSearch(){
+ const q=document.getElementById('search').value.trim().toLowerCase();
+ document.querySelectorAll('section').forEach(s=>s.classList.remove('hidden'));
+ if(!q)return;
+ let first=null;
+ document.querySelectorAll('section').forEach(s=>{
+   const ok=s.innerText.toLowerCase().includes(q);
+   if(!ok){s.classList.add('hidden')}
+   else{ s.classList.remove('collapsed'); if(!first)first=s; }
+ });
+ if(first)first.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('search').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
+document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async e=>{
+ const code=e.target.nextElementSibling.innerText;
+ try{await navigator.clipboard.writeText(code)}catch(err){}
+ const old=e.target.innerText;e.target.innerText='복사됨!';setTimeout(()=>e.target.innerText=old,900);
+}));
+</script>
+</body>
+</html>
