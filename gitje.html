@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git & GitHub 팀 프로젝트 명령어 가이드</title>
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--text:#18212f;--muted:#667085;--line:#e4e7ec;--primary:#0f766e;--primary-soft:#ecfdf5;--warn:#b45309;--warn-soft:#fff7ed;--danger:#b42318;--danger-soft:#fef3f2;--code:#111827;--shadow:0 8px 28px rgba(16,24,40,.08)}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.7} header{background:linear-gradient(135deg,#0f766e,#134e4a);color:#fff;padding:52px 24px 42px}.wrap{max-width:1180px;margin:0 auto}h1{margin:0 0 10px;font-size:40px;line-height:1.25}header p{margin:0;color:#d1fae5;font-size:18px}.tag{display:inline-block;margin-top:16px;padding:7px 12px;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-size:14px;color:#ecfdf5}.toolbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}.toolbar .wrap{display:flex;gap:10px;align-items:center;padding:12px 20px;overflow-x:auto}.toolbar a{white-space:nowrap;text-decoration:none;color:#344054;background:#f9fafb;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:14px;font-weight:700}.toolbar a:hover{background:var(--primary-soft);color:var(--primary)}main{padding:28px 20px 70px}section{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px;margin:18px 0;box-shadow:var(--shadow)}h2{margin:0 0 16px;font-size:28px}h3{margin:26px 0 10px;font-size:20px}.lead{font-size:18px;color:#344054}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}.flow div{border-radius:14px;padding:18px 12px;text-align:center;font-weight:800;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}.flow span{display:block;color:#98a2b3;font-size:12px;margin-top:6px}.cardgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:14px}.card{border:1px solid var(--line);border-radius:14px;padding:18px}.card.good{background:var(--primary-soft);border-color:#a7f3d0}.card.warn{background:var(--warn-soft);border-color:#fed7aa}.label{display:inline-block;font-size:12px;font-weight:900;border-radius:999px;padding:4px 8px;margin-bottom:8px;background:#eef2ff;color:#3730a3}.cmd{position:relative;margin:10px 0;background:var(--code);color:#f8fafc;border-radius:12px;padding:14px 46px 14px 16px;font-family:Consolas,Monaco,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.copy{position:absolute;top:8px;right:8px;border:0;border-radius:8px;padding:6px 9px;cursor:pointer;background:#374151;color:#fff;font-size:12px}table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}th,td{border-bottom:1px solid var(--line);padding:13px 10px;vertical-align:top;text-align:left}th{background:#f8fafc}.inline{background:#f2f4f7;color:#b42318;border-radius:6px;padding:2px 6px;font-family:Consolas,monospace;font-size:.94em}.scenario{border-left:5px solid var(--primary);background:#f8fffd;padding:16px 18px;margin:14px 0;border-radius:0 12px 12px 0}.scenario strong{color:var(--primary)}.note{background:#fffbea;border:1px solid #fde68a;color:#713f12;border-radius:12px;padding:14px 16px;margin:14px 0}.dangerbox{background:var(--danger-soft);border:1px solid #fda29b;color:#912018;border-radius:12px;padding:14px 16px;margin:14px 0}.quick{background:#0f172a;color:#fff;border-radius:16px;padding:20px}.quick h3{color:#fff}.quick .cmd{background:#020617;border:1px solid #334155}footer{text-align:center;color:#667085;padding:26px 20px 50px;font-size:14px}@media(max-width:800px){h1{font-size:30px}.flow{grid-template-columns:1fr}.cardgrid{grid-template-columns:1fr}section{padding:20px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Git & GitHub 팀 프로젝트 명령어 가이드</h1><p>파일 만들기 → 수정하기 → 올리기 → 팀원 작업 받기 → 다시 수정해서 올리기</p><span class="tag">DATA TIP-OFF 팀용 · 초보자 기준</span></div></header>
+<nav class="toolbar"><div class="wrap"><a href="#first">처음 1번만</a><a href="#daily">매일 작업</a><a href="#commands">명령어 사전</a><a href="#scenarios">상황별 사용법</a><a href="#branch">브랜치</a><a href="#conflict">충돌 해결</a><a href="#rules">팀 규칙</a><a href="#cheat">치트시트</a></div></nav>
+<main class="wrap">
+<section><h2>0. 제일 먼저 이해할 것</h2><p class="lead"><b>Git은 내 컴퓨터에서 변경 기록을 관리</b>하고, <b>GitHub는 그 기록을 인터넷에서 팀원과 공유</b>하는 공간이다.</p><div class="flow"><div>① 파일 수정<span>VS Code</span></div><div>② git add<span>올릴 변경 선택</span></div><div>③ git commit<span>변경 저장</span></div><div>④ git pull<span>최신 작업 받기</span></div><div>⑤ git push<span>GitHub에 올리기</span></div></div><div class="note"><b>핵심 습관:</b> 작업 시작 전 <code class="inline">git pull</code>, 작업 후 <code class="inline">git add → git commit → git pull → git push</code>.</div></section>
+<section id="first"><h2>1. 처음 프로젝트 받을 때 — 딱 한 번</h2><h3>① GitHub 저장소 주소 복사</h3><p>팀 저장소에서 <b>Code → HTTPS</b> 주소 복사.</p><h3>② 프로젝트를 둘 폴더로 이동</h3><div class="cmd">cd Desktop<button class="copy">복사</button></div><h3>③ 저장소 복제</h3><div class="cmd">git clone https://github.com/팀계정/DATA-TIP-OFF.git<button class="copy">복사</button></div><p><code class="inline">clone</code>은 처음 한 번만 사용.</p><h3>④ 프로젝트 폴더로 이동</h3><div class="cmd">cd DATA-TIP-OFF<button class="copy">복사</button></div><h3>⑤ VS Code로 열기</h3><div class="cmd">code .<button class="copy">복사</button></div><div class="dangerbox"><b>중요:</b> 이미 프로젝트 폴더가 있으면 다시 clone하지 말고, 그 폴더에서 <code class="inline">git pull</code>을 사용한다.</div></section>
+<section id="daily"><h2>2. ⭐ 매일 작업할 때 가장 중요한 순서</h2><div class="quick"><h3>작업 시작</h3><div class="cmd">git status<button class="copy">복사</button></div><div class="cmd">git pull origin main<button class="copy">복사</button></div><h3>VS Code에서 파일 수정 후</h3><div class="cmd">git status<button class="copy">복사</button></div><div class="cmd">git add .<button class="copy">복사</button></div><div class="cmd">git commit -m "경제 Signal 분석 추가"<button class="copy">복사</button></div><div class="cmd">git pull origin main<button class="copy">복사</button></div><div class="cmd">git push origin main<button class="copy">복사</button></div></div><h3>왜 push 직전에 pull?</h3><p>내가 작업하는 동안 팀원이 먼저 push했을 수 있기 때문이다. 최신 작업을 먼저 받은 뒤 내 작업과 합치고 올리는 게 안전하다.</p></section>
+<section id="commands"><h2>3. 자주 쓰는 Git 명령어 사전</h2><table><thead><tr><th>명령어</th><th>언제?</th><th>뜻</th></tr></thead><tbody><tr><td><code class="inline">git clone 주소</code></td><td>처음 1회</td><td>GitHub 프로젝트 전체를 내 PC로 복사</td></tr><tr><td><code class="inline">git status</code></td><td>수시로</td><td>수정/추가된 파일 상태 확인</td></tr><tr><td><code class="inline">git pull origin main</code></td><td>작업 시작 전, push 전</td><td>GitHub 최신 내용을 내 PC로 가져오기</td></tr><tr><td><code class="inline">git add .</code></td><td>수정 완료 후</td><td>변경된 파일 전체를 commit 대상으로 선택</td></tr><tr><td><code class="inline">git add 파일명</code></td><td>특정 파일만 올릴 때</td><td>그 파일만 commit 대상으로 선택</td></tr><tr><td><code class="inline">git commit -m "메시지"</code></td><td>작업 단위 저장</td><td>내 PC Git 기록에 변경 저장</td></tr><tr><td><code class="inline">git push origin main</code></td><td>commit 후</td><td>내 commit을 GitHub에 업로드</td></tr><tr><td><code class="inline">git diff</code></td><td>내가 뭘 바꿨는지 확인</td><td>아직 commit하지 않은 코드 차이 보기</td></tr><tr><td><code class="inline">git log --oneline</code></td><td>기록 확인</td><td>commit 기록 보기</td></tr><tr><td><code class="inline">git branch</code></td><td>브랜치 확인</td><td>브랜치 목록과 현재 브랜치 표시</td></tr></tbody></table></section>
+<section id="scenarios"><h2>4. 상황별로 지금 뭘 입력해야 하지?</h2><div class="scenario"><strong>상황 A — 오늘 처음 작업 시작</strong><div class="cmd">cd 프로젝트폴더
+git status
+git pull origin main<button class="copy">복사</button></div></div><div class="scenario"><strong>상황 B — 새 HTML 파일 생성 후 업로드</strong><div class="cmd">git status
+git add .
+git commit -m "메인 페이지 HTML 추가"
+git pull origin main
+git push origin main<button class="copy">복사</button></div></div><div class="scenario"><strong>상황 C — 기존 style.css만 수정</strong><div class="cmd">git diff
+git add static/css/style.css
+git commit -m "메인 카드 스타일 수정"
+git pull origin main
+git push origin main<button class="copy">복사</button></div></div><div class="scenario"><strong>상황 D — 팀원이 방금 올렸다고 함</strong><div class="cmd">git pull origin main<button class="copy">복사</button></div></div><div class="scenario"><strong>상황 E — 수정했지만 아직 GitHub에는 안 올리고 싶음</strong><div class="cmd">git add .
+git commit -m "K-Contents API 1차 테스트"<button class="copy">복사</button></div><p>commit까지만 하면 내 PC 기록에만 저장. push해야 GitHub에 올라간다.</p></div><div class="scenario"><strong>상황 F — 내가 뭘 수정했는지 모르겠음</strong><div class="cmd">git status
+git diff<button class="copy">복사</button></div></div></section>
+<section id="branch"><h2>5. 팀 프로젝트에서는 브랜치를 쓰면 더 안전함</h2><p class="lead">세 명이 모두 main에 바로 push할 수 있지만, 같은 파일을 같이 수정하면 충돌이 난다. 초보 팀은 <b>개인/기능 브랜치 → 작업 → push → Pull Request → main에 merge</b>가 안전하다.</p><h3>① 작업 브랜치 생성</h3><div class="cmd">git switch -c feature/economy<button class="copy">복사</button></div><p>예: <code class="inline">feature/economy</code>, <code class="inline">feature/kcontents</code>, <code class="inline">feature/sports</code>, <code class="inline">feature/front</code></p><h3>② 현재 브랜치 확인</h3><div class="cmd">git branch<button class="copy">복사</button></div><h3>③ 작업 후 내 브랜치에 업로드</h3><div class="cmd">git add .
+git commit -m "아파트 Signal 분석 추가"
+git push origin feature/economy<button class="copy">복사</button></div><h3>④ GitHub에서 Pull Request 생성</h3><p>내 브랜치를 main에 합쳐달라는 요청을 만들고, 확인 후 Merge.</p><h3>⑤ 최신 main 받기</h3><div class="cmd">git switch main
+git pull origin main<button class="copy">복사</button></div><div class="note"><b>추천 규칙:</b> 같은 <code class="inline">style.css</code>나 <code class="inline">app.py</code>를 동시에 수정하지 않도록 팀 채팅에 “지금 이 파일 수정 중”이라고 알린다.</div></section>
+<section id="conflict"><h2>6. 충돌(CONFLICT)이 났을 때</h2><p>내 코드와 팀원 코드가 같은 부분을 서로 다르게 수정하면 Git이 자동으로 합치지 못할 수 있다.</p><div class="dangerbox"><code class="inline"><<<<<<< HEAD</code><br>내 코드<br><code class="inline">=======</code><br>팀원 코드<br><code class="inline">>>>>>>></code></div><p>VS Code에서 원하는 코드만 남기고 충돌 표시를 지운 뒤 저장한다.</p><div class="cmd">git add .
+git commit -m "프론트 충돌 해결"
+git push origin main<button class="copy">복사</button></div><div class="dangerbox"><b>주의:</b> 충돌이 났다고 팀원 코드를 무조건 지우지 말고, 필요한 코드를 직접 합친다.</div></section>
+<section><h2>7. 잘못했을 때 유용한 안전 명령어</h2><h3>git add 취소</h3><div class="cmd">git restore --staged 파일명<button class="copy">복사</button></div><h3>commit 전 파일 수정 내용 완전 취소</h3><div class="cmd">git restore 파일명<button class="copy">복사</button></div><div class="dangerbox"><b>주의:</b> 수정 내용이 실제로 사라질 수 있으니 정말 버려도 될 때만 사용.</div><h3>최근 commit 확인</h3><div class="cmd">git log --oneline -10<button class="copy">복사</button></div></section>
+<section id="rules"><h2>8. DATA TIP-OFF 팀 Git 규칙</h2><table><thead><tr><th>규칙</th><th>이유</th></tr></thead><tbody><tr><td>작업 시작 전에 무조건 pull</td><td>오래된 파일 위에서 작업 방지</td></tr><tr><td>commit 메시지를 구체적으로</td><td>누가 무엇을 바꿨는지 확인 가능</td></tr><tr><td>큰 작업 하나당 commit 하나</td><td>문제 생겼을 때 되돌리기 쉬움</td></tr><tr><td>같은 파일 동시 수정 전 팀 채팅에 알리기</td><td>충돌 최소화</td></tr><tr><td>app.py와 style.css는 최종 통합 담당자 확인 후 merge</td><td>핵심 파일 충돌 방지</td></tr><tr><td>API Key는 GitHub에 올리지 않기</td><td>키 유출 방지</td></tr><tr><td>CSV 원본은 raw, 가공본은 processed</td><td>원본 손상 방지</td></tr></tbody></table><h3>좋은 commit 메시지</h3><div class="cmd">git commit -m "인구 데이터 결측치 처리"
+git commit -m "K-Contents YouTube API 연동"
+git commit -m "Signal 상세 페이지 추가"
+git commit -m "메인 카드 CSS 수정"
+git commit -m "야구 날씨 데이터 날짜 기준 병합"<button class="copy">복사</button></div></section>
+<section><h2>9. API Key는 GitHub에 올리지 말기</h2><h3>.env 예시</h3><div class="cmd">YOUTUBE_API_KEY=실제키
+OPENAI_API_KEY=실제키<button class="copy">복사</button></div><h3>.gitignore 예시</h3><div class="cmd">.env
+__pycache__/
+.ipynb_checkpoints/
+venv/
+.venv/<button class="copy">복사</button></div><p><code class="inline">.gitignore</code>에 적힌 파일은 Git 업로드 대상에서 제외된다.</p></section>
+<section id="cheat"><h2>10. ⭐ 초압축 치트시트</h2><div class="cardgrid"><div class="card good"><span class="label">처음 한 번</span><div class="cmd">git clone 저장소주소
+cd 프로젝트폴더
+code .<button class="copy">복사</button></div></div><div class="card good"><span class="label">매일 시작</span><div class="cmd">git status
+git pull origin main<button class="copy">복사</button></div></div><div class="card good"><span class="label">작업 완료</span><div class="cmd">git add .
+git commit -m "무엇을 했는지"
+git pull origin main
+git push origin main<button class="copy">복사</button></div></div><div class="card warn"><span class="label">팀원이 방금 올림</span><div class="cmd">git pull origin main<button class="copy">복사</button></div></div><div class="card"><span class="label">상태 확인</span><div class="cmd">git status
+git diff
+git log --oneline<button class="copy">복사</button></div></div><div class="card"><span class="label">브랜치 작업</span><div class="cmd">git switch -c feature/작업명
+git add .
+git commit -m "작업 설명"
+git push origin feature/작업명<button class="copy">복사</button></div></div></div></section>
+<section><h2>11. 실제 DATA TIP-OFF 작업 예시</h2><h3>아침</h3><div class="cmd">cd DATA_TIP_OFF
+git pull origin main<button class="copy">복사</button></div><h3>오전 — 경제 분석 수정 후</h3><div class="cmd">git status
+git add analysis/economy_analysis.ipynb
+git commit -m "아파트 거래량 변화율 분석 추가"
+git pull origin main
+git push origin main<button class="copy">복사</button></div><h3>팀원이 프론트 수정 후 push했다고 알림</h3><div class="cmd">git pull origin main<button class="copy">복사</button></div><h3>저녁 — detail.html 수정 후</h3><div class="cmd">git status
+git add templates/detail.html
+git commit -m "Signal 상세 페이지 근거 영역 추가"
+git pull origin main
+git push origin main<button class="copy">복사</button></div></section>
+<section><h2>12. 헷갈리는 개념 한 줄 정리</h2><table><tbody><tr><th>clone</th><td>프로젝트를 처음 통째로 받기</td></tr><tr><th>pull</th><td>이미 받은 프로젝트에서 최신 변경분 받기</td></tr><tr><th>add</th><td>이번에 저장할 변경 파일 선택</td></tr><tr><th>commit</th><td>변경 내용을 Git 기록으로 저장</td></tr><tr><th>push</th><td>내 commit을 GitHub에 업로드</td></tr><tr><th>branch</th><td>main을 건드리지 않고 별도 작업 공간 만들기</td></tr><tr><th>merge</th><td>서로 다른 브랜치의 작업 합치기</td></tr><tr><th>conflict</th><td>같은 부분을 서로 다르게 수정해 자동 병합이 안 되는 상태</td></tr></tbody></table></section>
+</main>
+<footer>DATA TIP-OFF Team Git Guide · 초보 팀 프로젝트용</footer>
+<script>document.querySelectorAll('.copy').forEach(btn=>{btn.addEventListener('click',()=>{const box=btn.parentElement;const clone=box.cloneNode(true);const b=clone.querySelector('.copy');if(b)b.remove();navigator.clipboard.writeText(clone.textContent.trim());const old=btn.textContent;btn.textContent='완료';setTimeout(()=>btn.textContent=old,900);});});</script>
+</body></html>
