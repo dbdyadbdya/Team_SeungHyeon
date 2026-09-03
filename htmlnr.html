@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML 수업노트 정리</title>
+<style>
+:root{
+  --bg:#f3f3f3;
+  --paper:#ffffff;
+  --ink:#111111;
+  --muted:#666666;
+  --line:#dddddd;
+  --soft:#f8f8f8;
+  --dark:#101010;
+  --dark2:#181818;
+  --code:#111111;
+  --codeText:#efefef;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+  line-height:1.65;
+}
+.layout{
+  display:grid;
+  grid-template-columns:220px minmax(0,1fr);
+  min-height:100vh;
+}
+aside{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+  padding:26px 18px;
+  background:linear-gradient(180deg,#0f0f0f,#171717);
+  color:#fff;
+  border-right:1px solid #2a2a2a;
+}
+.logo{
+  padding:4px 4px 20px;
+  border-bottom:1px solid #2a2a2a;
+}
+.logo h1{
+  margin:0;
+  font-size:26px;
+  letter-spacing:-.04em;
+}
+.logo p{
+  margin:6px 0 0;
+  color:#bcbcbc;
+  font-size:13px;
+}
+.nav{
+  margin-top:18px;
+}
+.nav a{
+  display:block;
+  padding:10px 11px;
+  margin:4px 0;
+  border-radius:10px;
+  color:#e7e7e7;
+  text-decoration:none;
+  font-size:14px;
+  transition:.15s ease;
+}
+.nav a:hover{
+  background:#242424;
+  transform:translateX(2px);
+}
+.tipbox{
+  margin-top:22px;
+  padding:14px;
+  border:1px solid #343434;
+  border-radius:14px;
+  color:#d0d0d0;
+  background:#141414;
+  font-size:12px;
+}
+main{
+  width:min(1180px,calc(100% - 40px));
+  margin:0 auto;
+  padding:30px 0 50px;
+}
+.hero{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:28px 30px;
+  margin-bottom:18px;
+}
+.hero-top{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:center;
+}
+.hero-title{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+.iconbox{
+  width:56px;height:56px;
+  display:grid;place-items:center;
+  background:#111;color:#fff;
+  border-radius:14px;
+  font-size:28px;
+  box-shadow:0 5px 12px rgba(0,0,0,.15);
+}
+.hero h2{
+  margin:0;
+  font-size:34px;
+  letter-spacing:-.045em;
+}
+.hero p{
+  margin:5px 0 0;
+  color:#555;
+  font-size:14px;
+}
+.badge{
+  border:1px solid #bdbdbd;
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:12px;
+  white-space:nowrap;
+  background:#fff;
+}
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  margin-top:22px;
+}
+.summary-grid > div{
+  display:flex;
+  gap:12px;
+  padding:18px;
+  min-height:96px;
+  background:#fff;
+  border-right:1px solid var(--line);
+}
+.summary-grid > div:last-child{border-right:0}
+.summary-grid .emoji{font-size:25px}
+.summary-grid b{display:block;margin-bottom:3px}
+.summary-grid span{color:#555;font-size:13px}
+.section{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:24px;
+  margin:16px 0;
+}
+.section h2{
+  margin:0 0 16px;
+  font-size:22px;
+  letter-spacing:-.03em;
+}
+.section h3{
+  margin:22px 0 10px;
+  font-size:16px;
+}
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.three{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.card{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+  background:#fff;
+}
+.card h4{
+  margin:0 0 8px;
+  font-size:15px;
+}
+.small{font-size:13px;color:#555}
+pre{
+  margin:12px 0 0;
+  background:linear-gradient(180deg,#121212,#191919);
+  color:var(--codeText);
+  border-radius:12px;
+  padding:16px;
+  overflow:auto;
+  font:13px/1.6 Consolas,Monaco,monospace;
+  border:1px solid #242424;
+}
+code.inline{
+  background:#efefef;
+  border:1px solid #dedede;
+  border-radius:6px;
+  padding:2px 6px;
+  font-family:Consolas,monospace;
+  font-size:.9em;
+}
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff;
+  font-size:13px;
+}
+th,td{
+  padding:11px 12px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  vertical-align:top;
+}
+th:last-child,td:last-child{border-right:0}
+tr:last-child td{border-bottom:0}
+th{
+  background:#f2f2f2;
+}
+.note{
+  margin-top:12px;
+  border:1px dashed #bdbdbd;
+  border-radius:10px;
+  padding:12px 14px;
+  background:#fafafa;
+  font-size:13px;
+}
+.checklist{
+  list-style:none;
+  padding:0;
+  margin:10px 0 0;
+}
+.checklist li{
+  margin:6px 0;
+  font-size:13px;
+}
+.checklist li::before{
+  content:"✓";
+  font-weight:800;
+  margin-right:8px;
+}
+.practice{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+}
+.practice > div{
+  padding:14px;
+  border-right:1px solid var(--line);
+  background:#fff;
+}
+.practice > div:last-child{border-right:0}
+.practice h4{
+  margin:-14px -14px 12px;
+  padding:9px 10px;
+  background:#161616;
+  color:#fff;
+  text-align:center;
+  font-size:12px;
+}
+.mock-input,.mock-textarea,.mock-select{
+  width:100%;
+  border:1px solid #d1d1d1;
+  border-radius:6px;
+  padding:8px;
+  background:#fafafa;
+  color:#888;
+  font-size:12px;
+  margin-top:5px;
+}
+.mock-textarea{height:84px}
+.footer{
+  margin-top:18px;
+  background:#111;
+  color:#eee;
+  border-radius:12px;
+  padding:14px 18px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:13px;
+}
+@media(max-width:980px){
+  .layout{grid-template-columns:1fr}
+  aside{position:relative;height:auto}
+  .nav{display:flex;gap:6px;overflow:auto}
+  .nav a{white-space:nowrap;background:#1e1e1e}
+  .tipbox{display:none}
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .summary-grid > div{border-bottom:1px solid var(--line)}
+  .practice{grid-template-columns:1fr 1fr}
+  .practice > div{border-bottom:1px solid var(--line)}
+}
+@media(max-width:640px){
+  main{width:min(95%,1180px)}
+  .hero-top{align-items:flex-start;flex-direction:column}
+  .hero h2{font-size:28px}
+  .summary-grid,.two,.three,.practice{grid-template-columns:1fr}
+  .summary-grid > div,.practice > div{border-right:0}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside>
+  <div class="logo">
+    <h1>HTML<br>수업노트 📖</h1>
+    <p>기본 개념 정리</p>
+  </div>
+
+  <div class="nav">
+    <a href="#top">🏠 홈 (목차)</a>
+    <a href="#ready">🚀 1. Ready</a>
+    <a href="#emphasis">✨ 2. 강조 태그</a>
+    <a href="#list">📋 3. 리스트 태그</a>
+    <a href="#image">🖼️ 4. 이미지 삽입</a>
+    <a href="#link">🔗 5. a 태그</a>
+    <a href="#table">🧾 6. 테이블 태그</a>
+    <a href="#form">🏆 7. Form 태그</a>
+    <a href="#practice">📝 8. 태그 실습</a>
+    <a href="#summary">📌 9. 한눈에 요약</a>
+  </div>
+
+  <div class="tipbox">
+    <b>💡 VS Code 꿀팁</b><br><br>
+    ✓ 주석 : Ctrl + /<br>
+    ✓ 문서 형식 : ! + Enter<br>
+    ✓ Live Server : Alt + L + O<br>
+    ✓ 위/아래 복사 : Alt + Shift + ↑ / ↓<br>
+    ✓ 다중 커서 : Alt + 클릭
+  </div>
+</aside>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-title">
+      <div class="iconbox">&lt;/&gt;</div>
+      <div>
+        <h2>HTML 기초</h2>
+        <p>웹 페이지의 뼈대를 만드는 언어</p>
+      </div>
+    </div>
+    <div class="badge">HTML 기초 한편 정리 ✨</div>
+  </div>
+
+  <div class="summary-grid">
+    <div><div class="emoji">📄</div><div><b>구조 정의</b><span>웹 문서의 구조를 정의하는 언어</span></div></div>
+    <div><div class="emoji">🌐</div><div><b>웹 표준</b><span>모든 브라우저에서 동작하는 표준 기술</span></div></div>
+    <div><div class="emoji">💻</div><div><b>태그 기반</b><span>태그로 요소를 정의하고 내용을 담음</span></div></div>
+    <div><div class="emoji">🎨</div><div><b>다양한 요소</b><span>텍스트, 이미지, 링크, 폼 등 제공</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="ready">
+  <h2>1. 🔧 Ready (준비하기)</h2>
+  <div class="two">
+    <div class="card">
+      <h4>기본 문서 구조</h4>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0"&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="card">
+      <h4>⚙️ 준비 단계 체크리스트</h4>
+      <ul class="checklist">
+        <li>VS Code 실행</li>
+        <li><code class="inline">! + Enter</code> : 문서 형식 자동 생성</li>
+        <li><code class="inline">Alt + L + O</code> : Live Server 실행</li>
+        <li><code class="inline">Ctrl + /</code> : 주석 처리</li>
+        <li><code class="inline">Alt + Shift + ↑ / ↓</code> : 위/아래 복사</li>
+        <li><code class="inline">Alt + 클릭</code> : 다중 커서</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="three" style="margin-top:16px">
+    <div class="card">
+      <h4>📰 제목 태그</h4>
+      <div class="small"><code class="inline">h1 ~ h6</code><br>숫자가 작을수록 더 큰 제목</div>
+    </div>
+    <div class="card">
+      <h4>📄 본문 태그</h4>
+      <div class="small"><code class="inline">p</code> : 문단 단위<br><code class="inline">span</code> : 내용만큼 영역 차지</div>
+    </div>
+    <div class="card">
+      <h4>↩️ 개행 / 구분</h4>
+      <div class="small"><code class="inline">br</code> : 줄바꿈<br><code class="inline">hr</code> : 수평선</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="emphasis">
+  <h2>2. ✨ 강조 태그</h2>
+  <div class="two">
+    <div class="card">
+      <table>
+        <tr><th>태그</th><th>설명</th></tr>
+        <tr><td><b>&lt;b&gt;</b></td><td>시각적으로 굵게 표시</td></tr>
+        <tr><td><b>&lt;strong&gt;</b></td><td>의미적으로 중요한 내용 강조</td></tr>
+        <tr><td><b>&lt;mark&gt;</b></td><td>배경색으로 강조</td></tr>
+        <tr><td><b>&lt;sup&gt;</b></td><td>위첨자</td></tr>
+        <tr><td><b>&lt;sub&gt;</b></td><td>아래첨자</td></tr>
+      </table>
+    </div>
+    <div class="card">
+<pre>&lt;b&gt;굵게&lt;/b&gt;
+&lt;strong&gt;중요 강조&lt;/strong&gt;
+&lt;mark&gt;배경색 강조&lt;/mark&gt;
+
+2&lt;sup&gt;3&lt;/sup&gt;
+H&lt;sub&gt;2&lt;/sub&gt;O</pre>
+      <div class="note">💡 태그 안에 다른 태그를 넣는 형태를 <b>태그 중첩</b>이라고 합니다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="list">
+  <h2>3. 📋 리스트 태그</h2>
+  <div class="two">
+    <div class="card">
+      <h4>◆ ul (정돈되지 않은 리스트)</h4>
+      <div class="small">type : disc(기본), circle, square</div>
+<pre>&lt;ul type="square"&gt;
+  &lt;li&gt;html&lt;/li&gt;
+  &lt;li&gt;css&lt;/li&gt;
+  &lt;li&gt;js&lt;/li&gt;
+&lt;/ul&gt;</pre>
+    </div>
+    <div class="card">
+      <h4>◆ ol (정돈된 리스트)</h4>
+      <div class="small">type : 1(기본), A, a, I, i</div>
+<pre>&lt;ol type="I"&gt;
+  &lt;li&gt;등원하기&lt;/li&gt;
+  &lt;li&gt;QR찍기&lt;/li&gt;
+  &lt;li&gt;수업듣기&lt;/li&gt;
+&lt;/ol&gt;</pre>
+    </div>
+  </div>
+  <div class="note">📌 <code class="inline">ul</code>과 <code class="inline">ol</code> 모두 실제 데이터는 <code class="inline">li</code> 태그 안에 작성합니다.</div>
+</section>
+
+<section class="section" id="image">
+  <h2>4. 🖼️ 이미지 삽입</h2>
+  <div class="two">
+    <div class="card">
+      <h4>필수 속성 : src</h4>
+      <div class="small">외부 이미지 주소 사용</div>
+<pre>&lt;img src="https://example.com/image.jpg"&gt;</pre>
+
+      <div class="small" style="margin-top:12px">내부 이미지 상대 경로 사용</div>
+<pre>&lt;img src="../img/11.jpg"
+     width="1000px"&gt;</pre>
+    </div>
+    <div class="card">
+      <h4>📁 경로 정리</h4>
+      <table>
+        <tr><th>경로</th><th>의미</th></tr>
+        <tr><td>./</td><td>현재 위치</td></tr>
+        <tr><td>../</td><td>상위 폴더</td></tr>
+        <tr><td>/</td><td>최상위 기준</td></tr>
+      </table>
+      <div class="note">💡 이미지가 안 뜨면 <b>파일명 / 확장자 / 폴더 위치</b>부터 확인하세요.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="link">
+  <h2>5. 🔗 a 태그 (링크)</h2>
+  <div class="two">
+    <div class="card">
+      <h4>필수 속성 : href</h4>
+<pre>&lt;a href="https://www.naver.com"&gt;
+  네이버로 이동
+&lt;/a&gt;</pre>
+    </div>
+    <div class="card">
+      <h4>이미지에 링크 걸기</h4>
+<pre>&lt;a href="./document/ex04이미지.html"&gt;
+  &lt;img src="./img/11.jpg"&gt;
+&lt;/a&gt;</pre>
+      <div class="note">📎 이미지를 <code class="inline">a</code> 태그 안에 넣으면 이미지 클릭 시 이동 가능합니다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="table">
+  <h2>6. 🧾 테이블 태그</h2>
+  <div class="two">
+    <div class="card">
+      <table>
+        <tr><th>태그</th><th>설명</th></tr>
+        <tr><td>&lt;table&gt;</td><td>표 전체 영역</td></tr>
+        <tr><td>&lt;caption&gt;</td><td>표 제목</td></tr>
+        <tr><td>&lt;tr&gt;</td><td>행(Row)</td></tr>
+        <tr><td>&lt;th&gt;</td><td>제목 셀</td></tr>
+        <tr><td>&lt;td&gt;</td><td>일반 셀</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4>병합 속성</h4>
+      <div class="small"><b>rowspan</b> : 위/아래 병합<br><b>colspan</b> : 좌/우 병합</div>
+<pre>&lt;th colspan="2"&gt;메뉴&lt;/th&gt;
+
+&lt;td rowspan="2"&gt;3,500&lt;/td&gt;</pre>
+      <div class="note">⚠️ <b>row = 행 = 세로 병합</b> / <b>col = 열 = 가로 병합</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="form">
+  <h2>7. 🏆 Form 태그</h2>
+
+  <div class="three">
+    <div class="card">
+      <h4>Form 속성</h4>
+      <div class="small">
+        <b>method</b><br>
+        get : URL에 내용 표시<br>
+        post : URL에 내용 직접 노출 X<br><br>
+        <b>action</b><br>
+        데이터를 전달할 서버 주소
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>텍스트 입력</h4>
+      <div class="small">
+        ⌨️ input type="text"<br>
+        🔒 input type="password"<br>
+        📅 input type="date"<br>
+        🎨 input type="color"<br>
+        📁 input type="file"
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>선택 입력</h4>
+      <div class="small">
+        ☑️ checkbox : 중복 선택 가능<br>
+        ◉ radio : 같은 name에서 하나만 선택<br>
+        ▾ select + option : 드롭다운 선택
+      </div>
+    </div>
+  </div>
+
+  <h3>주요 input 속성</h3>
+  <table>
+    <tr><th>속성</th><th>설명</th></tr>
+    <tr><td>name</td><td>입력한 값을 구분하기 위한 이름</td></tr>
+    <tr><td>placeholder</td><td>입력 전 안내 문구</td></tr>
+    <tr><td>autofocus</td><td>페이지 실행 시 자동 커서</td></tr>
+    <tr><td>value</td><td>기본값 / 전송값 지정</td></tr>
+    <tr><td>readonly</td><td>사용자가 수정할 수 없는 읽기 전용</td></tr>
+    <tr><td>maxlength</td><td>최대 입력 글자 수 제한</td></tr>
+  </table>
+
+  <div class="two" style="margin-top:16px">
+    <div class="card">
+<pre>ID &lt;input type="text"
+   name="id"
+   placeholder="아이디를 입력하세요."
+   autofocus&gt;
+
+PW &lt;input type="password"
+   name="pw"
+   maxlength="10"&gt;</pre>
+    </div>
+    <div class="card">
+<pre>남성 &lt;input type="radio"
+ name="gender" value="man"&gt;
+
+여성 &lt;input type="radio"
+ name="gender" value="woman"&gt;
+
+&lt;textarea cols="30" rows="5"&gt;
+&lt;/textarea&gt;</pre>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="practice">
+  <h2>8. 📝 태그 실습 (회원가입 폼)</h2>
+
+  <div class="practice">
+    <div>
+      <h4>Step 1 : 아이디/비번 입력</h4>
+      <b class="small">아이디</b>
+      <div class="mock-input">아이디를 입력하세요.</div>
+      <b class="small">비밀번호</b>
+      <div class="mock-input">비밀번호를 입력하세요.</div>
+      <b class="small">비밀번호 확인</b>
+      <div class="mock-input">비밀번호를 입력하세요.</div>
+    </div>
+
+    <div>
+      <h4>Step 2 : 개인정보</h4>
+      <div class="small"><b>성별</b><br>◯ 남 &nbsp;&nbsp; ◯ 여</div>
+      <div class="small" style="margin-top:14px"><b>혈액형</b></div>
+      <div class="mock-select">A형 ▾</div>
+      <div class="small" style="margin-top:14px"><b>생일</b></div>
+      <div class="mock-input">연도-월-일 📅</div>
+    </div>
+
+    <div>
+      <h4>Step 3 : 선호도</h4>
+      <div class="small"><b>취미</b><br>☐ 축구 &nbsp; ☐ 야구 &nbsp; ☐ 농구</div>
+      <div class="small" style="margin-top:18px"><b>좋아하는 색깔</b></div>
+      <div class="mock-input">■ #000000</div>
+    </div>
+
+    <div>
+      <h4>Step 4 : 하고싶은 말</h4>
+      <div class="mock-textarea">하고 싶은 말을 입력하세요.</div>
+    </div>
+  </div>
+
+  <div class="note">🧩 실습 핵심 : <b>form</b>이 입력 전체를 묶고 → <b>table</b>이 배치를 만들고 → <b>input / select / textarea</b>가 실제 데이터를 입력받습니다.</div>
+</section>
+
+<section class="section" id="summary">
+  <h2>9. 📌 한눈에 요약</h2>
+
+  <div class="three">
+    <div class="card"><h4>🧱 구조</h4><div class="small">제목, 본문, 리스트, 링크, 이미지, 테이블 등 웹 요소 구성</div></div>
+    <div class="card"><h4>💻 태그</h4><div class="small">여는 태그와 닫는 태그의 쌍으로 요소를 정의</div></div>
+    <div class="card"><h4>⚙️ 속성</h4><div class="small">태그에 추가 정보를 제공하여 동작 제어</div></div>
+  </div>
+
+  <div class="three" style="margin-top:14px">
+    <div class="card"><h4>⭐ 시맨틱</h4><div class="small">의미에 맞는 태그 사용으로 가독성과 접근성 향상</div></div>
+    <div class="card"><h4>✏️ 연습</h4><div class="small">직접 작성하고 Live Server로 바로 확인하는 습관 중요</div></div>
+    <div class="card"><h4>🔥 핵심 암기</h4><div class="small">img→src / a→href / rowspan→세로 / colspan→가로</div></div>
+  </div>
+
+  <div class="footer">
+    <span>🤍 HTML 기초를 탄탄하게! 꾸준한 연습이 멋진 웹 개발로 이어집니다.</span>
+    <span>Keep Coding! 👨‍💻</span>
+  </div>
+</section>
+
+</main>
+</div>
+</body>
+</html>
